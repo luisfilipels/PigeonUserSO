@@ -1,0 +1,14 @@
+**/.idea
+.idea/
+Lib/
+Scripts/
+*/*.png
+local_history.patch
+*/.idea
+*/cmake-build-debug
+/cmake-build-debug
+.idea/workspace.xml
+CMakeLists.txt
+*.iml
+out/
+*.blend1

@@ -6,7 +6,7 @@ public class Usuario implements Runnable{
     private int cont = 1;
     private int id;
     public boolean running;
-    public Mensagem MsgEmPosse;
+    public Mensagem MsgEmPosse = null;
 
     public Usuario(Buffer buffer, int id) {
         this.buffer = buffer;
@@ -24,6 +24,7 @@ public class Usuario implements Runnable{
 
     public void enviaCarta() throws InterruptedException{
         buffer.insereCarta(MsgEmPosse);
+        MsgEmPosse = null;
     }
 
     public void run() {

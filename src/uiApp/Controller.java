@@ -1,15 +1,23 @@
 package uiApp;
 
+import animacao.PomboAnimacao;
+import animacao.UsuarioAnimacao;
 import correio.Buffer;
 import correio.Pombo;
-import correio.Usuario;
+import correio.Escritor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
@@ -28,52 +36,95 @@ public class Controller {
     @FXML
     private TextField textField;
 
-    private Buffer buffer = new Buffer(10, 3);
+    private static Buffer buffer = new Buffer(10, 3);
     private boolean pomboVivo = false;
     private int idUsuario = 0;
-    private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-    private Pombo pombo;
-    private int currentID;
+    private ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();
+    private ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();
+    private static Pombo pombo;
+    private static int currentID, tc, tv, td;
 
+    public Buffer getBuffer() {
+        return buffer;
+    }
 
     @FXML
-    void criarUsuario(ActionEvent event) {
-        usuarios.add(new Usuario(buffer, usuarios.size()+1));
-        System.out.println("Usuario criado.");
+    private TextField tvField, tcField, tdField;
+
+    @FXML
+    public Button botaoCriarPombo;
+
+    @FXML
+    public void handlePomboButton(ActionEvent event) {
+        PomboAnimacao animacaoPombo = new PomboAnimacao();
+        tc = Integer.parseInt(tcField.getText());
+        td = Integer.parseInt(tdField.getText());
+        tv = Integer.parseInt(tvField.getText());
+
+        pombo = new Pombo(this.buffer, tc, tv, td, animacaoPombo);
+        //idJanela.getChildren().add(animacaoPombo.getUsuario());
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+
+    }
+
+    public void popUpPombo () throws IOException {
+        Stage popup = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("popupPombo.fxml"));
+        popup.setTitle("Criar pombo");
+        popup.setScene(new Scene(root, 300, 275));
+        popup.show();
+    }
+
+    private void criarPombo() throws Exception{
+
+        popUpPombo();
 
     }
 
     @FXML
-    void matarUsuario(ActionEvent event) {
-        usuarios.get(currentID).matar();
-        usuarios.remove(currentID);
-        System.out.println("Usuario morto ");
+    void criarEscritor(ActionEvent event) {
+        UsuarioAnimacao animacaoEscritor = new UsuarioAnimacao();
+        listaEscritores.add(new Escritor(buffer, listaEscritores.size()+1, 3000, animacaoEscritor));
+        animacaosEscritor.add(animacaoEscritor);
+        idJanela.getChildren().add(animacaoEscritor.getUsuario());
+        System.out.println("Escritor criado.");
+        System.out.println(tc + " " + td + " " + tv);
 
     }
 
     @FXML
-    void handleID(ActionEvent event) {
+    void matarEscritor(ActionEvent event) {
+        listaEscritores.get(currentID).matar();
+        listaEscritores.remove(currentID);
+        idJanela.getChildren().remove(animacaosEscritor.get(currentID).getUsuario());
+        animacaosEscritor.remove(currentID);
+        System.out.println("Escritor morto ");
+
+    }
+
+    @FXML
+    void handleID() {
         currentID = Integer.parseInt(textField.getText());
         System.out.println("Input recebido");
         System.out.println("ID armazenada: " + currentID);
     }
 
-    private void criarPombo() {
-        pombo = new Pombo(buffer);
-    }
+
 
     private void matarPombo() {
-        pombo = null;
+        this.pombo.matar();
+        this.pombo = null;
     }
 
     @FXML
-    void acaoPombo(ActionEvent event) {
+    void acaoPombo(ActionEvent event) throws Exception{
         if(!pomboVivo) {
             pomboVivo = true;
             btPombo.setText("Matar Pombo");
 
             criarPombo();
-            //new Thread(new Pombo(buffer)).start();
 
             System.out.println("Pombo criado...");
         }
@@ -81,6 +132,7 @@ public class Controller {
         {
             pomboVivo = false;
             btPombo.setText("Criar Pombo");
+            matarPombo();
             System.out.println("Pombo morto...");
         }
 

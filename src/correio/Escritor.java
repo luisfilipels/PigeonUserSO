@@ -1,16 +1,21 @@
 package correio;
 
-public class Usuario implements Runnable{
+import animacao.UsuarioAnimacao;
+
+public class Escritor implements Runnable{
 
     private Buffer buffer;
     private int cont = 1;
-    private int id;
+    private int id, tmpEscrita;
     public boolean running;
     public Mensagem MsgEmPosse = null;
+    private UsuarioAnimacao animacao;
 
-    public Usuario(Buffer buffer, int id) {
+    public Escritor(Buffer buffer, int id, int tmpEscrita, UsuarioAnimacao animacao) {
         this.buffer = buffer;
         this.id = id;
+        this.tmpEscrita = tmpEscrita;
+        this.animacao = animacao;
         new Thread(this).start();
     }
 
@@ -27,6 +32,14 @@ public class Usuario implements Runnable{
         MsgEmPosse = null;
     }
 
+    public int getsId() {
+        return this.id;
+    }
+
+    public void setsId (int id) {
+        this.id = id;
+    }
+
     public void run() {
         this.running = true;
         while(this.running) {
@@ -38,6 +51,7 @@ public class Usuario implements Runnable{
                 escreveCarta();
                 enviaCarta();
                 buffer.insereCarta(new Mensagem(id, cont++));
+                animacao.play(1);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

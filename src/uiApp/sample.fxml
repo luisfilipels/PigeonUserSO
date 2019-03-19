@@ -26,8 +26,8 @@
         <VBox layoutX="1098.0" layoutY="571.0">
             <children>
                 <Button fx:id="btPombo" maxWidth="150.0" mnemonicParsing="false" onAction="#acaoPombo" text="Criar Pompo" />
-                <Button maxWidth="150.0" mnemonicParsing="false" onAction="#criarUsuario" text="Criar Usuário" />
-                <Button maxWidth="150.0" mnemonicParsing="false" onAction="#matarUsuario" text="Matar Usuário" />
+                <Button maxWidth="150.0" mnemonicParsing="false" onAction="#criarEscritor" text="Criar Usuário" />
+                <Button maxWidth="150.0" mnemonicParsing="false" onAction="#matarEscritor" text="Matar Usuário" />
             <TextField fx:id="textField" onAction="#handleID" />
             </children>
         </VBox>

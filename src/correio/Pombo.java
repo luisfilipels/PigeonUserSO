@@ -1,15 +1,23 @@
 package correio;
 
+import animacao.PomboAnimacao;
+
 public class Pombo implements Runnable{
 
     private Buffer buffer;
-    private int carga;
+    private int carga, tv, tc, td;
     private boolean running;
+    private PomboAnimacao animacao;
 
-    public Pombo(Buffer buffer) {
+    public Pombo(Buffer buffer, int tc, int tv, int td, PomboAnimacao animacao) {
         this.buffer = buffer;
+        this.tc = tc;
+        this.tv = tv;
+        this.td = td;
+        this.animacao = animacao;
         new Thread(this).start();
         this.running = true;
+
     }
 
     public void matar() {
@@ -18,8 +26,8 @@ public class Pombo implements Runnable{
 
     public void run() {
         while(running) {
-            correio.Mensagem[] cartas;
-
+            Mensagem[] cartas;
+            System.out.println("Pombo vivo!");
             try {
                 cartas = buffer.removeCarta();
             } catch (InterruptedException e) {
@@ -27,14 +35,17 @@ public class Pombo implements Runnable{
                 e.printStackTrace();
             }
 
+            executando(tc);
+
             System.out.println("Pombo voando...\n");
             executando(500);
+            animacao.vooIda(tv/10);
 
             System.out.println("Pombo descarregando...\n");
-            executando(10000);
+            executando(td);
 
             System.out.println("Pombo voltando...\n");
-            executando(500);
+            executando(tv/10);
 
             System.out.println("Pombo voltou!\n");
 

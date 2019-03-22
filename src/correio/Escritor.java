@@ -27,10 +27,9 @@ public class Escritor implements Runnable{
         MsgEmPosse = new Mensagem(id, cont++);
     }
 
-    public void enviaCarta() throws InterruptedException{
-        buffer.insereCarta(MsgEmPosse);
-        MsgEmPosse = null;
-    }
+    //public void enviaCarta() throws InterruptedException{
+    //    buffer.insereCarta(MsgEmPosse);
+    //}
 
     public int getsId() {
         return this.id;
@@ -44,14 +43,15 @@ public class Escritor implements Runnable{
         this.running = true;
         while(this.running) {
             try {
+                escreveCarta();
+                animacao.escrever(tmpEscrita);
                 executando(1000);
+                //enviaCarta();
+                MsgEmPosse = null;
+                buffer.insereCarta(new Mensagem(id, cont++), animacao);
                 if (!this.running) {
                     break;
                 }
-                escreveCarta();
-                enviaCarta();
-                buffer.insereCarta(new Mensagem(id, cont++));
-                animacao.play(1);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

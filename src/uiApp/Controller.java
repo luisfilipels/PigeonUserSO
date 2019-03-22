@@ -42,6 +42,7 @@ public class Controller {
     private ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();
     private ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();
     private static Pombo pombo;
+    private static PomboAnimacao animacaoPombo;
     private static int currentID, tc, tv, td;
 
     public Buffer getBuffer() {
@@ -49,20 +50,24 @@ public class Controller {
     }
 
     @FXML
-    private TextField tvField, tcField, tdField;
+    private TextField tvField, tcField, tdField, numCartas;
 
     @FXML
     public Button botaoCriarPombo;
 
     @FXML
     public void handlePomboButton(ActionEvent event) {
-        PomboAnimacao animacaoPombo = new PomboAnimacao();
-        tc = Integer.parseInt(tcField.getText());
-        td = Integer.parseInt(tdField.getText());
-        tv = Integer.parseInt(tvField.getText());
+        //PomboAnimacao animacaoPombo = new PomboAnimacao();
+        animacaoPombo = new PomboAnimacao();
+        tc = 1000*Integer.parseInt(tcField.getText());
+        td = 1000*Integer.parseInt(tdField.getText());
+        tv = 1000*Integer.parseInt(tvField.getText());
+        buffer.setCarga(Integer.parseInt(numCartas.getText()));
 
+        System.out.println(buffer.getCarga());
+
+        idJanela.getChildren().add(animacaoPombo.getPombo());
         pombo = new Pombo(this.buffer, tc, tv, td, animacaoPombo);
-        //idJanela.getChildren().add(animacaoPombo.getUsuario());
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -73,7 +78,8 @@ public class Controller {
         Stage popup = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("popupPombo.fxml"));
         popup.setTitle("Criar pombo");
-        popup.setScene(new Scene(root, 300, 275));
+        popup.setResizable(false);
+        popup.setScene(new Scene(root, 500, 375));
         popup.show();
     }
 
@@ -88,7 +94,8 @@ public class Controller {
         UsuarioAnimacao animacaoEscritor = new UsuarioAnimacao();
         listaEscritores.add(new Escritor(buffer, listaEscritores.size()+1, 3000, animacaoEscritor));
         animacaosEscritor.add(animacaoEscritor);
-        idJanela.getChildren().add(animacaoEscritor.getUsuario());
+        idJanela.getChildren().add(animacaoEscritor.getUsuarioEscrevendo());
+        idJanela.getChildren().add(animacaoEscritor.getUsuarioEmMovimento());
         System.out.println("Escritor criado.");
         System.out.println(tc + " " + td + " " + tv);
 
@@ -98,7 +105,7 @@ public class Controller {
     void matarEscritor(ActionEvent event) {
         listaEscritores.get(currentID).matar();
         listaEscritores.remove(currentID);
-        idJanela.getChildren().remove(animacaosEscritor.get(currentID).getUsuario());
+        idJanela.getChildren().remove(animacaosEscritor.get(currentID).getUsuarioEscrevendo());
         animacaosEscritor.remove(currentID);
         System.out.println("Escritor morto ");
 

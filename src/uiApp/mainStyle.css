@@ -1,0 +1,9 @@
+.buttonPombo {
+    -fx-background-image: url("Botoes/PomboNormal1x.png");
+    -fx-border-radius: 100%;
+}
+
+.buttonPombo:hover {
+    -fx-graphic: url("Botoes/PomboHover1x.png");
+    -fx-border-radius: 100%;
+}

@@ -16,15 +16,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 public class PomboAnimacao {
 
-    final static Image PB01 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb01.png").toString());
-    final static Image PB02 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb02.png").toString());
-    final static Image PB03 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb03.png").toString());
-    final static Image PB04 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb04.png").toString());
-    final static Image PB05 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb05.png").toString());
-    final static Image PB06 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb06.png").toString());
-    final static Image PB07 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb07.png").toString());
-    final static Image PB08 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb08.png").toString());
-    final static Image PB09 = new javafx.scene.image.Image(PomboAnimacao.class.getResource("/pb09.png").toString());
+    final static Image PB01 = new Image(PomboAnimacao.class.getResource("/pb01.png").toString());
+    final static Image PB02 = new Image(PomboAnimacao.class.getResource("/pb02.png").toString());
+    final static Image PB03 = new Image(PomboAnimacao.class.getResource("/pb03.png").toString());
+    final static Image PB04 = new Image(PomboAnimacao.class.getResource("/pb04.png").toString());
+    final static Image PB05 = new Image(PomboAnimacao.class.getResource("/pb05.png").toString());
+    final static Image PB06 = new Image(PomboAnimacao.class.getResource("/pb06.png").toString());
+    final static Image PB07 = new Image(PomboAnimacao.class.getResource("/pb07.png").toString());
+    final static Image PB08 = new Image(PomboAnimacao.class.getResource("/pb08.png").toString());
+    final static Image PB09 = new Image(PomboAnimacao.class.getResource("/pb09.png").toString());
     private Group pombo;
     private int x, y;
 
@@ -120,11 +120,11 @@ public class PomboAnimacao {
         path.getElements().add (new LineTo (590, 246));
         path.getElements().add (new LineTo (640, 230));
         path.getElements().add (new LineTo (780, 220));
-        path.getElements().add (new LineTo (1350, 210));
-        path.getElements().add (new LineTo (1700, 200));
+        path.getElements().add (new LineTo (1350, 190));
+        path.getElements().add (new LineTo (1700, 100));
 
         PathTransition transition = new PathTransition();
-        transition.setDuration(Duration.seconds(duracao/1000));
+        transition.setDuration(Duration.seconds(duracao));
 
         transition.setPath(path);
         transition.setNode(pombo);
@@ -143,14 +143,16 @@ public class PomboAnimacao {
         path.getElements().add (new LineTo (x, y));
 
         PathTransition transition = new PathTransition();
-        transition.setDuration(Duration.seconds(duracao/1000));
+        transition.setDuration(Duration.seconds(duracao));
 
         transition.setPath(path);
         transition.setNode(pombo);
         transition.play();
+
+
     }
 
-    public Group getUsuario() {
+    public Group getPombo() {
         return pombo;
     }
 }

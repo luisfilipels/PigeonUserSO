@@ -2,6 +2,8 @@ package correio;
 
 import java.util.concurrent.Semaphore;
 
+import animacao.UsuarioAnimacao;
+
 public class Buffer {
 
     private Mensagem[] buffer;
@@ -19,14 +21,19 @@ public class Buffer {
         this.carga = carga;
     }
 
-    public void insereCarta(Mensagem valor) throws InterruptedException{
+    public void insereCarta(Mensagem valor, UsuarioAnimacao animacao) throws InterruptedException{
 
+        mutex.acquire();
         if(mensagens == buffer.length) {
             System.out.println("Buffer cheio ."+valor.getAutor()+" espera");	//TODO Tirar isso depois!!!
+            animacao.usuarioDormir();
         }
+        mutex.release();
 
         empty.acquire();
         mutex.acquire();
+        animacao.enviarCarta(1);
+        executando(1000);
 
         buffer[indiceEntrada] = valor;
         indiceEntrada = (indiceEntrada+1) % buffer.length;
@@ -34,29 +41,28 @@ public class Buffer {
 
         System.out.println(valor.getAutor()+" escreveu mensagem "+valor.getNumero());
 
+        mutex.release();
+
         if(mensagens%carga == 0 && mensagens > 0){
             full.release();
         }
-        mutex.release();
 
     }
 
 
-    public Mensagem[] removeCarta() throws InterruptedException{
+    public Mensagem[] removeCarta(int tc) throws InterruptedException{
 
         Mensagem saida[] = new Mensagem[carga];
-
+        mutex.acquire();
         if(mensagens < carga) {
             System.out.println("Carga insuficiente, Pombo espera");
         }
+        mutex.release();
 
         full.acquire();
         mutex.acquire();
 
-        System.out.println("-----buffer-----\n");
-        for(int i=0; i<buffer.length; i++)
-            System.out.println(i+":["+buffer[i]+"]");
-        System.out.println("----------------\n");
+
 
         for(int i=0; i<carga; i++) {
 
@@ -68,11 +74,37 @@ public class Buffer {
             empty.release();
             System.out.println("Pombo carregando "+saida[i]);
         }
+        executando(tc);
 
         mutex.release();
 
+        System.out.println("-----buffer-----\n");
+        for(int i=0; i<buffer.length; i++)
+            System.out.println(i+":["+buffer[i]+"]");
+        System.out.println("----------------\n");
 
         return saida;
+    }
+
+    public int getCarga () {
+        return carga;
+    }
+
+    public void setCarga(int carga) {
+        if (carga <= buffer.length) {
+            this.carga = carga;
+        }
+        else {
+            System.out.println("Valor inválido para negocio.");
+        }
+    }
+
+    public void executando(int duracao) {
+        long lastTime = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
+        while(now-lastTime < duracao) {
+            now = System.currentTimeMillis();
+        }
     }
 
 }

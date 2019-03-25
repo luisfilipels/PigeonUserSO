@@ -2,6 +2,7 @@ package correio;
 
 import java.util.concurrent.Semaphore;
 
+import animacao.PomboAnimacao;
 import animacao.UsuarioAnimacao;
 
 public class Buffer {
@@ -32,14 +33,14 @@ public class Buffer {
 
         empty.acquire();
         mutex.acquire();
-        animacao.enviarCarta(1);
+        animacao.enviarCarta();
         executando(1000);
 
         buffer[indiceEntrada] = valor;
         indiceEntrada = (indiceEntrada+1) % buffer.length;
         mensagens++;
 
-        System.out.println(valor.getAutor()+" escreveu mensagem "+valor.getNumero());
+        System.out.println(valor.getAutor()+" escreveu mensagem "+ (valor.getNumero()-1));
 
         mutex.release();
 
@@ -50,21 +51,26 @@ public class Buffer {
     }
 
 
-    public Mensagem[] removeCarta(int tc) throws InterruptedException{
+    public Mensagem[] removeCarta(int tc, PomboAnimacao pomboAnimado) throws InterruptedException{
 
         Mensagem saida[] = new Mensagem[carga];
         mutex.acquire();
         if(mensagens < carga) {
             System.out.println("Carga insuficiente, Pombo espera");
+            pomboAnimado.dormir();
         }
         mutex.release();
 
         full.acquire();
         mutex.acquire();
+        
 
-
+        
 
         for(int i=0; i<carga; i++) {
+        	
+            pomboAnimado.carregando(tc/carga);
+            executando((tc*500)/carga);
 
             saida[i] = buffer[indiceSaida];
             buffer[indiceSaida] = null;
@@ -74,8 +80,6 @@ public class Buffer {
             empty.release();
             System.out.println("Pombo carregando "+saida[i]);
         }
-        executando(tc);
-
         mutex.release();
 
         System.out.println("-----buffer-----\n");

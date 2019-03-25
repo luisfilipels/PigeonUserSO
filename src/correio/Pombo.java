@@ -29,7 +29,7 @@ public class Pombo implements Runnable{
             Mensagem[] cartas;
             System.out.println("Pombo vivo!");
             try {
-                cartas = buffer.removeCarta(tc);
+                cartas = buffer.removeCarta(tc, animacao);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
@@ -45,7 +45,7 @@ public class Pombo implements Runnable{
             executando(td*1000);
 
             System.out.println("Pombo voltando...\n");
-            executando(tv/5);
+            animacao.vooVolta(tv/5);
             executando(1000*tv/2);
 
             System.out.println("Pombo voltou!\n");

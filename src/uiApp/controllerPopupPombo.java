@@ -1,31 +1,34 @@
 package uiApp;
 
-import animacao.PomboAnimacao;
-import animacao.UsuarioAnimacao;
-import correio.Buffer;
 import correio.Pombo;
-import correio.Escritor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+public class ControllerPopupPombo {
 
-public class controllerPopupPombo {
+    @FXML
+    private TextField tvField, tcField, tdField, numCartas;
 
-    private int tc, tv, td;
-    private Controller mainController;
+    public Controller mainController;
 
-    controllerPopupPombo(Controller mainController) {
-        this.mainController = mainController;
+    @FXML
+    public void handlePomboButton(ActionEvent event) {
+
+
+        Controller.tc = Integer.parseInt(tcField.getText());
+        Controller.td = Integer.parseInt(tdField.getText());
+        Controller.tv = Integer.parseInt(tvField.getText());
+        Controller.buffer.setCarga(Integer.parseInt(numCartas.getText()));
+
+        System.out.println(Controller.buffer.getCarga());
+
+        Controller.pombo = new Pombo(Controller.getBuffer(), Controller.getTc(), Controller.getTv(), Controller.getTd(), Controller.animacaoPombo);
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+
     }
-
 }

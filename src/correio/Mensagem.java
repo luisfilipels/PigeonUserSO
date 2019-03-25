@@ -2,16 +2,16 @@ package correio;
 
 public class Mensagem {
 
-    private int idAutor;
+    private String idAutor;
     private int numero;
 
-    public Mensagem(int id, int numero){
+    public Mensagem(String id, int numero){
         this.idAutor = id;
         this.numero = numero;
 
     }
 
-    public int getAutor(){
+    public String getAutor(){
         return idAutor;
     }
 
@@ -20,7 +20,7 @@ public class Mensagem {
     }
 
     public String toString(){
-        return String.format("mensagem %d do escritor %d ", numero, idAutor);
+        return String.format("mensagem %d do escritor %s ", numero, idAutor);
     }
 
 }

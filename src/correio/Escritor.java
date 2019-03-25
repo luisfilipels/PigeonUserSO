@@ -6,12 +6,13 @@ public class Escritor implements Runnable{
 
     private Buffer buffer;
     private int cont = 1;
-    private int id, tmpEscrita;
+    private int tmpEscrita;
+    private String id;
     public boolean running;
     public Mensagem MsgEmPosse = null;
     private UsuarioAnimacao animacao;
 
-    public Escritor(Buffer buffer, int id, int tmpEscrita, UsuarioAnimacao animacao) {
+    public Escritor(Buffer buffer, String id, int tmpEscrita, UsuarioAnimacao animacao) {
         this.buffer = buffer;
         this.id = id;
         this.tmpEscrita = tmpEscrita;
@@ -31,11 +32,11 @@ public class Escritor implements Runnable{
     //    buffer.insereCarta(MsgEmPosse);
     //}
 
-    public int getsId() {
+    public String getsId() {
         return this.id;
     }
 
-    public void setsId (int id) {
+    public void setsId (String id) {
         this.id = id;
     }
 
@@ -48,7 +49,7 @@ public class Escritor implements Runnable{
                 executando(1000);
                 //enviaCarta();
                 MsgEmPosse = null;
-                buffer.insereCarta(new Mensagem(id, cont++), animacao);
+                buffer.insereCarta(new Mensagem(id, cont), animacao);
                 if (!this.running) {
                     break;
                 }

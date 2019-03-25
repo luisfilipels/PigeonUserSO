@@ -23,7 +23,9 @@ public class UsuarioAnimacao {
     private ImageView us00, us01;
     private Group usuarioEscrevendo, usuarioEmMovimento;
 
-    public UsuarioAnimacao() {
+    public String idAnimacao;
+
+    public UsuarioAnimacao(String idAnimacao) {
         Random random = new Random();
         x = random.nextInt(316)+758;
         y = random.nextInt(370)+100;
@@ -32,34 +34,33 @@ public class UsuarioAnimacao {
         usuarioEscrevendo = new Group(us00);
         usuarioEscrevendo.setTranslateX(x);
         usuarioEscrevendo.setTranslateY(y);
-
+        this.idAnimacao = idAnimacao;
         usuarioEmMovimento = new Group(us01);
         usuarioEmMovimento.setTranslateX(x);
         usuarioEmMovimento.setTranslateY(y);
 
     }
 
-    public void enviarCarta(int duracao) {
+    public void enviarCarta() {
         us00.setImage(US0_CARTA);
         usuarioEmMovimento.setOpacity(0);
         usuarioEscrevendo.setOpacity(1);
-        KeyValue xValue1 = new KeyValue(us00.xProperty(), 562-x);
-        KeyValue yValue1 = new KeyValue(us00.yProperty(), 346-y);
-        KeyValue image1 = new KeyValue(us00.imageProperty(), US01);
-        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(500), image1, xValue1, yValue1);
+  		
+		KeyValue image1 = new KeyValue(us00.imageProperty(), US01);
+		KeyValue xValue1 = new KeyValue(us00.xProperty(), 562-x);
+		KeyValue yValue1 = new KeyValue(us00.yProperty(), 346-y);		
+		KeyFrame keyFrame1 = new KeyFrame(Duration.millis(500),xValue1, yValue1, image1);
+		
+		KeyValue xValue2 = new KeyValue(us00.xProperty(), 0);
+		KeyValue yValue2 = new KeyValue(us00.yProperty(), 0);
+		KeyFrame keyFrame2 = new KeyFrame(Duration.millis(1000), xValue2, yValue2);
 
-        KeyValue xValue2 = new KeyValue(us00.xProperty(), 0);
-        KeyValue yValue2 = new KeyValue(us00.yProperty(), 0);
-        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(500), xValue1, yValue1);
-
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(1);
-
-        //timeline.setAutoReverse(true);
-        timeline.getKeyFrames().addAll(keyFrame1, keyFrame2);
-        timeline.play();
-
-    }
+		
+		Timeline timeline = new Timeline();
+		timeline.getKeyFrames().addAll(keyFrame1, keyFrame2);
+		timeline.play();
+       
+	}
 
     public void escrever(int duracao){
         usuarioEscrevendo.setOpacity(0);

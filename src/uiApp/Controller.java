@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,6 +51,7 @@ public class Controller {
 
     public ControllerPopupUsuario popupUsuario;
     public ControllerPopupPombo popupPombo;
+    public ControllerPopupM popupM;
 
 	@FXML
 	private void initialize() {
@@ -66,19 +68,33 @@ public class Controller {
 		btPombo.setBackground(null);
 
 		ControllerPopupUsuario.mainController = this;
+		ControllerPopupM.mainController = this;
+        try {
+            popupM();
 
-        /*try {
-            Stage popup = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-            popup.setTitle("Criar pombo");
-            popup.setResizable(false);
-            popup.setScene(new Scene(root, 500, 375));
-            popup.show();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+
+
+
 		
 	}
+
+	public void popupM () throws Exception{
+        Stage popup = new Stage();
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("popupCorreio.fxml")
+        );
+        ControllerPopupM secController = loader.getController();
+        Parent root = loader.load();
+        popup.setTitle("Criar Buffer");
+        popup.setResizable(false);
+        popup.setScene(new Scene(root, 600, 375));
+        popup.show();
+        popup.setAlwaysOnTop(true);
+        popup.toFront();
+    }
 
     public static Buffer buffer = new Buffer(10, 4);
     public static boolean pomboVivo = false;

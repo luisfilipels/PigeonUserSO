@@ -5,17 +5,21 @@ import animacao.UsuarioAnimacao;
 import correio.Buffer;
 import correio.Pombo;
 import correio.Escritor;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,6 +44,21 @@ public class Controller {
     @FXML
     private Button btMataUsuario;
 
+    @FXML
+    public Label TabelaNumCartas;
+
+    @FXML
+    public GridPane TabelaUsuarios;
+
+    @FXML
+    public TableView<dataTable> tableUsers = new TableView<dataTable>();
+
+    @FXML
+    public TableColumn<dataTable, String> tableID;
+
+    @FXML
+    public TableColumn<dataTable, String> tableStatus;
+
 
     @FXML
     private TextField textField;
@@ -54,6 +73,10 @@ public class Controller {
 
     public Group grupoUsuario = new Group();
     public Group grupoPombo = new Group();
+
+    public ObservableList<dataTable> listaUsuarios = FXCollections.observableArrayList(
+            new dataTable("Teste", "123")
+    );
 
 	@FXML
 	private void initialize() {
@@ -81,10 +104,16 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        tableUsers.setEditable(true);
+		tableUsers.setItems(listaUsuarios);
+		tableID = new TableColumn<dataTable, String>();
+		tableID.setCellValueFactory(new PropertyValueFactory<dataTable, String>("ID"));
+		tableStatus = new TableColumn<dataTable, String>();
+		tableStatus.setCellValueFactory(new PropertyValueFactory<dataTable, String>("Status"));
+		tableUsers.getColumns().addAll(tableID, tableStatus);
 
 
-
-		
 	}
 
 	public void popupM () throws Exception{
@@ -197,6 +226,9 @@ public class Controller {
     void matarEscritor(ActionEvent event) {
         String idLido = fieldDeletaUsuario.getText();
         System.out.println(grupoUsuario.getChildren().size());
+        //for (int i = 0; i < tableUsers.getRowCount(); i++) {
+        //    if (tableUsers.getChildren().get(i).)
+        //}
         for (int i = 0; i < listaEscritores.size(); i++) {
             if (listaEscritores.get(i).getsId().equals(idLido)) {
                 listaEscritores.get(i).matar();

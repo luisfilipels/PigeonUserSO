@@ -23,9 +23,7 @@ public class UsuarioAnimacao {
     private ImageView us00, us01;
     private Group usuarioEscrevendo, usuarioEmMovimento;
 
-    public String idAnimacao;
-
-    public UsuarioAnimacao(String idAnimacao) {
+    public UsuarioAnimacao() {
         Random random = new Random();
         x = random.nextInt(316)+758;
         y = random.nextInt(370)+100;
@@ -34,7 +32,6 @@ public class UsuarioAnimacao {
         usuarioEscrevendo = new Group(us00);
         usuarioEscrevendo.setTranslateX(x);
         usuarioEscrevendo.setTranslateY(y);
-        this.idAnimacao = idAnimacao;
         usuarioEmMovimento = new Group(us01);
         usuarioEmMovimento.setTranslateX(x);
         usuarioEmMovimento.setTranslateY(y);

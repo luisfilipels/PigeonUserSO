@@ -1,6 +1,7 @@
 package correio;
 
 import animacao.UsuarioAnimacao;
+import uiApp.Controller;
 
 public class Escritor implements Runnable{
 
@@ -11,12 +12,14 @@ public class Escritor implements Runnable{
     public boolean running;
     public Mensagem MsgEmPosse = null;
     private UsuarioAnimacao animacao;
+    public Controller mainController;
 
-    public Escritor(Buffer buffer, String id, int tmpEscrita, UsuarioAnimacao animacao) {
+    public Escritor(Buffer buffer, String id, int tmpEscrita, UsuarioAnimacao animacao, Controller mainController) {
         this.buffer = buffer;
         this.id = id;
         this.tmpEscrita = tmpEscrita;
         this.animacao = animacao;
+        this.mainController = mainController;
         new Thread(this).start();
     }
 
@@ -46,7 +49,7 @@ public class Escritor implements Runnable{
             try {
                 escreveCarta();
                 animacao.escrever(tmpEscrita);
-                executando(1000);
+                executando(tmpEscrita);
                 //enviaCarta();
                 MsgEmPosse = null;
                 buffer.insereCarta(new Mensagem(id, cont), animacao);

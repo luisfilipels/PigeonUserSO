@@ -63,8 +63,8 @@
             <Label fx:id="TabelaNumCartas" scaleX="2.0" scaleY="2.0" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <TableView fx:id="tableUsers" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
               <columns>
-                <TableColumn fx:id="tableID" prefWidth="93.66666412353516" text="ID" />
-                <TableColumn fx:id="tableStatus" prefWidth="95.33333587646484" text="Status" />
+                <TableColumn fx:id="tableID" prefWidth="93.66666412353516" text="id" />
+                <TableColumn fx:id="tableStatus" prefWidth="95.33333587646484" text="status" />
               </columns>
             </TableView>
          </children>

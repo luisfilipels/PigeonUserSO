@@ -51,13 +51,13 @@ public class Controller {
     public GridPane TabelaUsuarios;
 
     @FXML
-    public TableView<dataTable> tableUsers = new TableView<dataTable>();
+    public TableView<Usuario> tableUsers = new TableView<Usuario>();
 
     @FXML
-    public TableColumn<dataTable, String> tableID;
+    public TableColumn<Usuario, String> tableID;
 
     @FXML
-    public TableColumn<dataTable, String> tableStatus;
+    public TableColumn<Usuario, String> tableStatus;
 
 
     @FXML
@@ -74,9 +74,8 @@ public class Controller {
     public Group grupoUsuario = new Group();
     public Group grupoPombo = new Group();
 
-    public ObservableList<dataTable> listaUsuarios = FXCollections.observableArrayList(
-            new dataTable("Teste", "123")
-    );
+    //public ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
+    public ObservableList<Usuario> listaUsuarios;
 
 	@FXML
 	private void initialize() {
@@ -104,14 +103,18 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //tableID = new TableColumn("id");
+        //tableStatus = new TableColumn("status");
+        //tableUsers.getColumns().addAll(tableID, tableStatus);
         TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        tableUsers.setEditable(true);
-		tableUsers.setItems(listaUsuarios);
-		tableID = new TableColumn<dataTable, String>();
-		tableID.setCellValueFactory(new PropertyValueFactory<dataTable, String>("ID"));
-		tableStatus = new TableColumn<dataTable, String>();
-		tableStatus.setCellValueFactory(new PropertyValueFactory<dataTable, String>("Status"));
-		tableUsers.getColumns().addAll(tableID, tableStatus);
+        listaUsuarios = FXCollections.observableArrayList();
+        tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
+        tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
+        //tableUsers.setEditable(true);
+        tableUsers.setItems(listaUsuarios);
+        //tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
+		//tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
+
 
 
 	}
@@ -158,24 +161,6 @@ public class Controller {
 
     @FXML
     public Button botaoCriarPombo;
-
-    /*@FXML
-    public void handlePomboButton(ActionEvent event) {
-
-
-        tc = 1000*Integer.parseInt(tcField.getText());
-        td = 1000*Integer.parseInt(tdField.getText());
-        tv = 1000*Integer.parseInt(tvField.getText());
-        buffer.setCarga(Integer.parseInt(numCartas.getText()));
-
-        System.out.println(buffer.getCarga());
-
-
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-
-    }*/
 
     public void popUpPombo () throws IOException {
         Stage popup = new Stage();
@@ -247,7 +232,7 @@ public class Controller {
     void handleID() {
         currentID = Integer.parseInt(textField.getText());
         System.out.println("Input recebido");
-        System.out.println("ID armazenada: " + currentID);
+        System.out.println("id armazenada: " + currentID);
     }
 
 

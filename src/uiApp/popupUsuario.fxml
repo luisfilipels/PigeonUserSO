@@ -30,7 +30,7 @@
                <children>
                   <TextField fx:id="idField" GridPane.columnIndex="1" />
                   <TextField fx:id="teField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="ID do Usuário:">
+                  <Label text="id do Usuário:">
                      <padding>
                         <Insets left="30.0" />
                      </padding>

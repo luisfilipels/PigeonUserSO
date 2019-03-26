@@ -2,19 +2,11 @@ package uiApp;
 
 import animacao.UsuarioAnimacao;
 import correio.Escritor;
-import correio.Pombo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ControllerPopupUsuario {
@@ -35,7 +27,7 @@ public class ControllerPopupUsuario {
         animacaoUsuario.getChildren().add(animacao.getUsuarioEmMovimento());
         animacaoUsuario.getChildren().add(animacao.getUsuarioEscrevendo());
         mainController.grupoUsuario.getChildren().add(animacaoUsuario);
-        mainController.listaUsuarios.add(new dataTable("Joao", "Status"));
+        mainController.listaUsuarios.add(new Usuario(idField.getText(), "Ocioso"));
         //mainController.listaUsuarios.
         //mainController.tableUsers.
         //Group linha = new Group();

@@ -38,7 +38,7 @@
                      </font>
                   </Label>
                   <Button fx:id="botaoCriarBuffer" mnemonicParsing="false" onAction="#handleMButton" prefHeight="25.0" prefWidth="78.0" text="Criar" translateX="40.0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" text="Cancelar" translateX="-40.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#sair" text="Sair" translateX="-40.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Label fx:id="labelValido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>

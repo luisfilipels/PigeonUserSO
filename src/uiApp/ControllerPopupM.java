@@ -4,9 +4,11 @@ import animacao.UsuarioAnimacao;
 import correio.Buffer;
 import correio.Escritor;
 import correio.Pombo;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +22,14 @@ public class ControllerPopupM {
 
     @FXML
     private Label labelValido;
+
+    @FXML
+    private Button botaoSair;
+
+    @FXML
+    public void sair(ActionEvent event) {
+        Platform.exit();
+    }
 
     @FXML
     public void handleMButton(ActionEvent event) {

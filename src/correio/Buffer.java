@@ -13,6 +13,7 @@ public class Buffer {
     private int indiceSaida = 0;
     private int mensagens = 0;
     private Semaphore empty, mutex, full;
+    public boolean pomboCarregando;
 
     public Buffer(int tamanho, int carga){
         empty = new Semaphore(tamanho);
@@ -68,7 +69,7 @@ public class Buffer {
         
 
         for(int i=0; i<carga; i++) {
-        	
+        	pomboCarregando = true;
             pomboAnimado.carregando(tc/carga);
             executando((tc*500)/carga);
 
@@ -79,6 +80,7 @@ public class Buffer {
 
             empty.release();
             System.out.println("Pombo carregando "+saida[i]);
+            pomboCarregando = false;
         }
         mutex.release();
 

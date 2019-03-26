@@ -8,6 +8,7 @@ import correio.Escritor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,12 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Controller {
     @FXML
@@ -53,6 +52,9 @@ public class Controller {
     public ControllerPopupPombo popupPombo;
     public ControllerPopupM popupM;
 
+    public Group grupoUsuario = new Group();
+    public Group grupoPombo = new Group();
+
 	@FXML
 	private void initialize() {
 		ImageView addUsuario01 = new ImageView(ADDUS01);
@@ -67,7 +69,11 @@ public class Controller {
 		btPombo.setGraphic(addPombo01);
 		btPombo.setBackground(null);
 
+		idJanela.getChildren().add(grupoUsuario);
+		idJanela.getChildren().add(grupoPombo);
+
 		ControllerPopupUsuario.mainController = this;
+		ControllerPopupPombo.mainController = this;
 		ControllerPopupM.mainController = this;
         try {
             popupM();
@@ -90,7 +96,7 @@ public class Controller {
         Parent root = loader.load();
         popup.setTitle("Criar Buffer");
         popup.setResizable(false);
-        popup.setScene(new Scene(root, 600, 375));
+        popup.setScene(new Scene(root, 600, 275));
         popup.show();
         popup.setAlwaysOnTop(true);
         popup.toFront();
@@ -104,7 +110,6 @@ public class Controller {
     public static Pombo pombo;
     public static PomboAnimacao animacaoPombo;
     public static int currentID, tc=5, tv=5, td=2;
-    public static boolean pomboLido;
 
     public static int getTc() {
         return tc;
@@ -171,10 +176,6 @@ public class Controller {
 
     @FXML
     void criarEscritor(ActionEvent event) throws IOException{
-        //UsuarioAnimacao animacao = new UsuarioAnimacao();
-        //animacaosEscritor.add(animacao);
-        //idJanela.getChildren().add(animacao.getUsuarioEmMovimento());
-        //idJanela.getChildren().add(animacao.getUsuarioEscrevendo());
         Stage popup = new Stage();
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("popupUsuario.fxml")
@@ -187,15 +188,6 @@ public class Controller {
         popup.setScene(new Scene(root, 500, 375));
         popup.show();
 
-
-        /*UsuarioAnimacao animacaoEscritor = new UsuarioAnimacao();
-        listaEscritores.add(new Escritor(buffer, listaEscritores.size()+1, 3000, animacaoEscritor));
-        animacaosEscritor.add(animacaoEscritor);
-        idJanela.getChildren().add(animacaoEscritor.getUsuarioEscrevendo());
-        idJanela.getChildren().add(animacaoEscritor.getUsuarioEmMovimento());
-        System.out.println("Escritor criado.");
-        System.out.println(tc + " " + td + " " + tv);*/
-
     }
 
     @FXML
@@ -204,40 +196,19 @@ public class Controller {
     @FXML
     void matarEscritor(ActionEvent event) {
         String idLido = fieldDeletaUsuario.getText();
-        UsuarioAnimacao animaTemp = null;
-        System.out.println(listaEscritores.size());
-        int removidos = 0;
-        System.out.println("Numero de elementos em idJanela: " + idJanela.getChildren().size());
+        System.out.println(grupoUsuario.getChildren().size());
         for (int i = 0; i < listaEscritores.size(); i++) {
             if (listaEscritores.get(i).getsId().equals(idLido)) {
-                animaTemp = animacaosEscritor.get(i);
                 listaEscritores.get(i).matar();
                 listaEscritores.remove(i);
-                removidos++;
             }
         }
-        System.out.println("===========");
-        for (int i = 0; i < idJanela.getChildren().size(); i++) {
-            System.out.println(idJanela.getChildren().get(i).toString());
-        }
-        System.out.println("===========");
-        if (removidos == 0) {
-            System.out.println("Usuario não encontrado.");
-            return;
-        }
-        for (int i = 0; i < idJanela.getChildren().size(); i++) {
-            if (idJanela.getChildren().get(i).equals(animaTemp.getUsuarioEmMovimento()) || idJanela.getChildren().get(i).equals(animaTemp.getUsuarioEscrevendo())) {
-                System.out.println("Encontrada uma animação.");
-                idJanela.getChildren().remove(i);
-                idJanela.getChildren().remove(i);
-                //idJanela.getChildren().remove(animaTemp.getUsuarioEmMovimento());
-                //idJanela.getChildren().remove(animaTemp.getUsuarioEscrevendo());
-                //idJanela.getChildren().set(i, null);
-                //TODO Corrigir a remoção de usuários
-
+        for (int i = 0; i < grupoUsuario.getChildren().size(); i++) {
+            if (grupoUsuario.getChildren().get(i).getAccessibleText().equals(idLido)) {
+                grupoUsuario.getChildren().remove(i);
+                System.out.println("Usuario removido");
             }
         }
-        System.out.println("Escritores com id " + idLido + " mortos.");
     }
 
     @FXML
@@ -250,17 +221,19 @@ public class Controller {
 
 
     private void matarPombo() {
-        pombo.matar();
-        pombo = null;
+        if (!buffer.pomboCarregando) {
+            pombo.matar();
+            pombo = null;
+            grupoPombo.getChildren().remove(0);
+        } else {
+            System.out.println("Pombo não pode ser morto agora!");
+        }
     }
 
     @FXML
     void acaoPombo(ActionEvent event) throws Exception{
         if(!pomboVivo) {
-        	pomboLido = false;
-        	animacaoPombo = new PomboAnimacao();
-        	idJanela.getChildren().add(animacaoPombo.getPomboVoando());
-            idJanela.getChildren().add(animacaoPombo.getPomboParado());
+            animacaoPombo = new PomboAnimacao();
 
             btPombo.setText("Matar Pombo");
             criarPombo();

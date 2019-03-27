@@ -29,16 +29,20 @@ public class PomboAnimacao {
     final static Image PBC01 = new Image(PomboAnimacao.class.getResource("/pg_carga01.png").toString());
     final static Image PBC02 = new Image(PomboAnimacao.class.getResource("/pg_carga02.png").toString());
     final static Image PBC03 = new Image(PomboAnimacao.class.getResource("/pg_carga03.png").toString());
-    final static Image PB0_SLEEP = new Image(PomboAnimacao.class.getResource("/pb_sleep.png").toString());    
-    
-    
+    final static Image PB0_SLEEP = new Image(PomboAnimacao.class.getResource("/pb_sleep.png").toString());
+
+    //aviãozinho do mapa
+    final static Image PBMAPA = new Image(PomboAnimacao.class.getResource("/VooCima1.png").toString());
+    private ImageView pb_mapa;
+
     private Group pomboVoando;
     private Group pomboCarregando;
+    private Group pomboMapa; //pombo no mapa
     private final ImageView pb00;
     private int x, y;
 
-    public PomboAnimacao() {    	
-  	
+    public PomboAnimacao() {
+
         final ImageView pb01 = new ImageView(PB01);
         final ImageView pb02 = new ImageView(PB02);
         final ImageView pb03 = new ImageView(PB03);
@@ -48,46 +52,46 @@ public class PomboAnimacao {
         final ImageView pb07 = new ImageView(PB07);
         final ImageView pb08 = new ImageView(PB08);
         final ImageView pb09 = new ImageView(PB09);
-        
-        pb00 = new ImageView(PB0_SLEEP);       
-        
+
+        pb00 = new ImageView(PB0_SLEEP);
+
         pomboVoando = new Group(pb01);
         x = 500;
         y = 280;
         pomboVoando.setTranslateX(x);
         pomboVoando.setTranslateY(y);
-        
+
         pomboCarregando = new Group(pb00);
         pomboCarregando.setTranslateX(x);
         pomboCarregando.setTranslateY(y);
-        
-    	pomboVoando.setOpacity(0);
-    	pomboCarregando.setOpacity(1);
-        
+
+        pomboVoando.setOpacity(0);
+        pomboCarregando.setOpacity(1);
+
         Timeline t = new Timeline();
         t.setCycleCount(Timeline.INDEFINITE);
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(200),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb02);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(300),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb03);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(400),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb04);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(400),
                 (ActionEvent event) -> {
@@ -101,28 +105,28 @@ public class PomboAnimacao {
                     pomboVoando.getChildren().setAll(pb05);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(600),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb06);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(700),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb07);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(800),
                 (ActionEvent event) -> {
                     pomboVoando.getChildren().setAll(pb08);
                 }
         ));
-        
+
         t.getKeyFrames().add(new KeyFrame(
                 Duration.millis(900),
                 (ActionEvent event) -> {
@@ -130,14 +134,25 @@ public class PomboAnimacao {
                 }
         ));
         t.play();
+
+        /*
+         * Inicializacao no pombo no mapa
+         * */
+        pb_mapa = new ImageView(PBMAPA);
+        pb_mapa.setLayoutX(197);
+        pb_mapa.setLayoutY(281);
+        pomboMapa = new Group(pb_mapa);
+
     }
 
+
+
     public void vooIda(int duracao) {
-    	
-    	pomboCarregando.setOpacity(0);
-    	pomboVoando.setOpacity(1);
-    	
-    	pomboVoando.setScaleX(1);
+
+        pomboCarregando.setOpacity(0);
+        pomboVoando.setOpacity(1);
+
+        pomboVoando.setScaleX(1);
         Path path = new Path();
         path.getElements().add (new MoveTo (x, y));
         path.getElements().add (new LineTo (550, 250));
@@ -154,14 +169,27 @@ public class PomboAnimacao {
         transition.setNode(pomboVoando);
         transition.play();
 
+        pomboMapa.setScaleX(1);
+        Path path2 = new Path();
+        path.getElements().add (new MoveTo (197, 291));
+        path.getElements().add (new LineTo (133, 235));
+        path.getElements().add (new LineTo (120, 161));
+
+        PathTransition transition2 = new PathTransition();
+        transition2.setDuration(Duration.seconds(duracao));
+
+        transition2.setPath(path);
+        transition2.setNode(pomboMapa);
+        transition2.play();
+
     }
 
     public void vooVolta(int duracao) {
-    	
-    	pomboCarregando.setOpacity(0);
-    	pomboVoando.setOpacity(1);
-    	
-    	pomboVoando.setScaleX(-1);
+
+        pomboCarregando.setOpacity(0);
+        pomboVoando.setOpacity(1);
+
+        pomboVoando.setScaleX(-1);
         Path path = new Path();
         path.getElements().add (new MoveTo (1700, 100));
         path.getElements().add (new LineTo (1350, 190));
@@ -178,21 +206,33 @@ public class PomboAnimacao {
         transition.setNode(pomboVoando);
         transition.play();
 
+        pomboMapa.setScaleX(-1);
+        Path path2 = new Path();
+        path.getElements().add (new MoveTo (120, 161));
+        path.getElements().add (new LineTo (133, 235));
+        path.getElements().add (new LineTo (197, 291));
+
+        PathTransition transition2 = new PathTransition();
+        transition2.setDuration(Duration.seconds(duracao));
+
+        transition2.setPath(path);
+        transition2.setNode(pomboMapa);
+        transition2.play();
 
     }
-    
+
     /*
-     * Animação pombo carregando 
+     * Animação pombo carregando
      * */
     public void carregando(int duracao) {
-    	
-    	pomboVoando.setOpacity(0);
-    	pomboCarregando.setOpacity(1);
-    	
-    	ImageView pbc01, pbc02, pbc03;
-    	pbc01 = new ImageView(PBC01);
-    	pbc02 = new ImageView(PBC02);
-    	pbc03 = new ImageView(PBC03);
+
+        pomboVoando.setOpacity(0);
+        pomboCarregando.setOpacity(1);
+
+        ImageView pbc01, pbc02, pbc03;
+        pbc01 = new ImageView(PBC01);
+        pbc02 = new ImageView(PBC02);
+        pbc03 = new ImageView(PBC03);
 
         Timeline t = new Timeline();
         t.setCycleCount(1);
@@ -200,59 +240,59 @@ public class PomboAnimacao {
         t.getKeyFrames().add(new KeyFrame(
                 Duration.seconds(duracao/3),
                 (ActionEvent event) -> {
-                	pomboCarregando.getChildren().setAll(pbc01);
+                    pomboCarregando.getChildren().setAll(pbc01);
                 }
         ));
 
         t.getKeyFrames().add(new KeyFrame(
                 Duration.seconds(duracao*(2/3)),
                 (ActionEvent event) -> {
-                	pomboCarregando.getChildren().setAll(pbc02);
+                    pomboCarregando.getChildren().setAll(pbc02);
                 }
         ));
 
         t.getKeyFrames().add(new KeyFrame(
                 Duration.seconds(duracao),
                 (ActionEvent event) -> {
-                	pomboCarregando.getChildren().setAll(pbc03);
+                    pomboCarregando.getChildren().setAll(pbc03);
                 }
         ));
         t.play();
-        
-    	
-    	/*  	
+
+
+    	/*
 		KeyValue image1 = new KeyValue(pb00.imageProperty(), PBC02);
 		KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(duracao/3),image1);
-		
+
 		KeyValue image2 = new KeyValue(pb00.imageProperty(), PBC03);
 		KeyFrame keyFrame2 = new KeyFrame(Duration.seconds((2/3)*duracao), image2);
-		
+
 		KeyValue image3 = new KeyValue(pb00.imageProperty(), PBC01);
 		KeyFrame keyFrame3 = new KeyFrame(Duration.seconds(duracao), image3);
 
-		
+
 		Timeline timeline = new Timeline();
 		timeline.setCycleCount(1);
 		timeline.getKeyFrames().addAll(keyFrame1, keyFrame2, keyFrame3);
 		timeline.play();
 		*/
     }
-    
+
     public void dormir() {
-    	
-    	pomboVoando.setOpacity(0);
-    	pomboCarregando.setOpacity(1);
-    	
-    	pb00.setImage(PB0_SLEEP);
-    	
-    	
+
+        pomboVoando.setOpacity(0);
+        pomboCarregando.setOpacity(1);
+
+        pb00.setImage(PB0_SLEEP);
+
+
         Timeline t = new Timeline();
         t.setCycleCount(1);
 
         t.getKeyFrames().add(new KeyFrame(
                 Duration.seconds(5),
                 (ActionEvent event) -> {
-                	pomboCarregando.getChildren().setAll(pb00);
+                    pomboCarregando.getChildren().setAll(pb00);
                 }
         ));
         t.play();
@@ -261,8 +301,12 @@ public class PomboAnimacao {
     public Group getPomboVoando() {
         return pomboVoando;
     }
-    
+
     public Group getPomboParado() {
-    	return pomboCarregando;
+        return pomboCarregando;
+    }
+
+    public Group getPomboMapa() {
+        return pomboMapa;
     }
 }

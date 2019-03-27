@@ -30,6 +30,7 @@ public class Pombo implements Runnable{
             System.out.println("Pombo vivo!");
             try {
                 cartas = buffer.removeCarta(tc, animacao);
+                //buffer.removeCarta(tc, animacao);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();

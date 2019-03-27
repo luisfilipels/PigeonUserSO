@@ -4,6 +4,8 @@ import java.util.concurrent.Semaphore;
 
 import animacao.PomboAnimacao;
 import animacao.UsuarioAnimacao;
+import javafx.scene.control.Label;
+import uiApp.Controller;
 
 public class Buffer {
 
@@ -11,31 +13,42 @@ public class Buffer {
     private int carga;
     private int indiceEntrada = 0;
     private int indiceSaida = 0;
-    private int mensagens = 0;
+    public int mensagens = 0;
     private Semaphore empty, mutex, full;
     public boolean pomboCarregando;
+    public static Controller mainController;
 
-    public Buffer(int tamanho, int carga){
+    public Buffer(int tamanho, int carga, Controller mainController){
         empty = new Semaphore(tamanho);
         full = new Semaphore(0);
         mutex = new Semaphore(1);
         buffer = new Mensagem[tamanho];
         this.carga = carga;
+        this.mainController = mainController;
     }
 
     public void insereCarta(Mensagem valor, UsuarioAnimacao animacao) throws InterruptedException{
 
         mutex.acquire();
-        if(mensagens == buffer.length) {
+        if(mensagens >= buffer.length) {
             System.out.println("Buffer cheio ."+valor.getAutor()+" espera");	//TODO Tirar isso depois!!!
             animacao.usuarioDormir();
+            //full.acquire();
         }
         mutex.release();
 
         empty.acquire();
         mutex.acquire();
+
         animacao.enviarCarta();
+
         executando(1000);
+        mainController.atualizaTabela();
+        //Controller.TabelaNumCartas.setText("2");
+        //String strCartas = Controller.TabelaNumCartas.getText();
+        //int numCartas = Integer.parseInt(strCartas);
+        //Controller.TabelaNumCartas.setText(Integer.toString(numCartas+1));
+
 
         buffer[indiceEntrada] = valor;
         indiceEntrada = (indiceEntrada+1) % buffer.length;
@@ -59,6 +72,12 @@ public class Buffer {
         if(mensagens < carga) {
             System.out.println("Carga insuficiente, Pombo espera");
             pomboAnimado.dormir();
+            //mutex.release();
+            //full.acquire();
+            //while (mensagens < carga) {
+
+            //}
+            //mutex.acquire();
         }
         mutex.release();
 
@@ -77,6 +96,7 @@ public class Buffer {
             buffer[indiceSaida] = null;
             indiceSaida = (indiceSaida+1) % buffer.length;
             mensagens--;
+            mainController.atualizaTabela();
 
             empty.release();
             System.out.println("Pombo carregando "+saida[i]);

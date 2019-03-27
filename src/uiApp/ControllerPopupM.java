@@ -39,7 +39,7 @@ public class ControllerPopupM {
             labelValido.setText("Insira um valor maior ou igual a 0!");
             return;
         }
-        Controller.buffer = new Buffer(lido, 1);
+        mainController.buffer = new Buffer(lido, 1, mainController);
         /*UsuarioAnimacao animacao = new UsuarioAnimacao(idField.getText());
         mainController.animacaosEscritor.add(animacao);
         mainController.listaEscritores.add(new Escritor(Controller.buffer, idField.getText(), Integer.parseInt(teField.getText()), mainController.animacaosEscritor.get(mainController.animacaosEscritor.size()-1)));

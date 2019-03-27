@@ -20,19 +20,19 @@ public class ControllerPopupPombo {
     public void handlePomboButton(ActionEvent event) {
 
 
-        Controller.tc = Integer.parseInt(tcField.getText());
-        Controller.td = Integer.parseInt(tdField.getText());
-        Controller.tv = Integer.parseInt(tvField.getText());
-        Controller.buffer.setCarga(Integer.parseInt(numCartas.getText()));
-        Controller.animacaoPombo = new PomboAnimacao();
+        mainController.tc = Integer.parseInt(tcField.getText());
+        mainController.td = Integer.parseInt(tdField.getText());
+        mainController.tv = Integer.parseInt(tvField.getText());
+        mainController.buffer.setCarga(Integer.parseInt(numCartas.getText()));
+        mainController.animacaoPombo = new PomboAnimacao();
         Group pombo = new Group();
-        pombo.getChildren().add(Controller.animacaoPombo.getPomboVoando());
-        pombo.getChildren().add(Controller.animacaoPombo.getPomboParado());
+        pombo.getChildren().add(mainController.animacaoPombo.getPomboVoando());
+        pombo.getChildren().add(mainController.animacaoPombo.getPomboParado());
         mainController.grupoPombo.getChildren().add(pombo);
 
-        System.out.println(Controller.buffer.getCarga());
+        System.out.println(mainController.buffer.getCarga());
 
-        Controller.pombo = new Pombo(Controller.getBuffer(), Controller.getTc(), Controller.getTv(), Controller.getTd(), Controller.animacaoPombo);
+        Controller.pombo = new Pombo(mainController.getBuffer(), mainController.getTc(), mainController.getTv(), mainController.getTd(), mainController.animacaoPombo);
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

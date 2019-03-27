@@ -5,6 +5,7 @@ import animacao.UsuarioAnimacao;
 import correio.Buffer;
 import correio.Pombo;
 import correio.Escritor;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,7 +46,7 @@ public class Controller {
     private Button btMataUsuario;
 
     @FXML
-    public Label TabelaNumCartas;
+    public static Label TabelaNumCartas = new Label();
 
     @FXML
     public GridPane TabelaUsuarios;
@@ -59,10 +60,9 @@ public class Controller {
     @FXML
     public TableColumn<Usuario, String> tableStatus;
 
-
     @FXML
-    private TextField textField;
-    
+    public Label testLabel;
+
     final static Image ADDUS01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuario1x.png").toString());
     final static Image KILLUS01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1x.png").toString());
     final static Image ADDPB01 = new Image(PomboAnimacao.class.getResource("/PomboNormal1x.png").toString());
@@ -74,7 +74,6 @@ public class Controller {
     public Group grupoUsuario = new Group();
     public Group grupoPombo = new Group();
 
-    //public ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
     public ObservableList<Usuario> listaUsuarios;
 
 	@FXML
@@ -86,13 +85,20 @@ public class Controller {
 		ImageView killUsuario01 = new ImageView(KILLUS01);
 		btMataUsuario.setGraphic(killUsuario01);
 		btMataUsuario.setBackground(null);
-		
+		testLabel = new Label();
+		testLabel.setText("0");
+		testLabel.setTranslateX(800);
+		testLabel.setTranslateY(300);
+		idJanela.getChildren().add(testLabel);
 		ImageView addPombo01 = new ImageView(ADDPB01);
 		btPombo.setGraphic(addPombo01);
 		btPombo.setBackground(null);
-
+		//TabelaNumCartas = new Label();
+        //TabelaUsuarios.add(TabelaNumCartas, 1, 1);
 		idJanela.getChildren().add(grupoUsuario);
 		idJanela.getChildren().add(grupoPombo);
+		//TabelaNumCartas.ed
+        TabelaNumCartas.setText("AAAAA");
 
 		ControllerPopupUsuario.mainController = this;
 		ControllerPopupPombo.mainController = this;
@@ -112,6 +118,31 @@ public class Controller {
 
 
 	}
+	int intTabela = 0;
+	public void atualizaTabela () {
+	    Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                testLabel.setText(Integer.toString(buffer.mensagens));
+                //intTabela = Integer.parseInt(testLabel.getText());
+                //System.out.println("Valor tabela: " + testLabel.getText());
+                //intTabela++;
+                //System.out.println("Valor: " + intTabela);
+                //testLabel.setText(Integer.toString(intTabela));
+            }
+        });
+        //TabelaNumCartas.setText("ASDSADWAEW");
+    }
+    //public void decrementaTabela () {
+	//    Platform.runLater(new Runnable() {
+    //        @Override
+    //        public void run() {
+    //            intTabela = Integer.parseInt(testLabel.getText());
+    //            intTabela--;
+    //            testLabel.setText(Integer.toString(intTabela));
+    //        }
+    //    });
+    //}
 
 	public void popupM () throws Exception{
         Stage popup = new Stage();
@@ -127,31 +158,30 @@ public class Controller {
         popup.setAlwaysOnTop(true);
         popup.toFront();
     }
+    public Buffer buffer = new Buffer(10, 4, this);
 
-    public static Buffer buffer = new Buffer(10, 4);
+    //public listaDados listaDados = new listaDados();
+
     public static boolean pomboVivo = false;
     public int idUsuario = 0;
     public ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();
     public ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();
     public static Pombo pombo;
     public static PomboAnimacao animacaoPombo;
-    public static int currentID, tc=5, tv=5, td=2;
+    public int currentID, tc=5, tv=5, td=2;
 
-    public static int getTc() {
+    public int getTc() {
         return tc;
     }
-    public static int getTv() {
+    public int getTv() {
         return tv;
     }
-    public static int getTd() {
+    public int getTd() {
         return td;
     }
-    public static Buffer getBuffer() {
+    public Buffer getBuffer() {
         return buffer;
     }
-
-    @FXML
-    private TextField tvField, tcField, tdField, numCartas;
 
     @FXML
     public Button botaoCriarPombo;
@@ -168,12 +198,11 @@ public class Controller {
         popup.setResizable(false);
         popup.setScene(new Scene(root, 500, 375));
         popup.show();
+        //this.testLabel.setText("Criou pombo");
     }
 
     private void criarPombo() throws Exception{
-
         popUpPombo();
-
     }
 
     @FXML
@@ -222,8 +251,9 @@ public class Controller {
 
     private void matarPombo() {
         if (!buffer.pomboCarregando) {
-            pombo.matar();
             pombo = null;
+            //pombo.matar();
+            //pombo = null;
             grupoPombo.getChildren().remove(0);
         } else {
             System.out.println("Pombo não pode ser morto agora!");

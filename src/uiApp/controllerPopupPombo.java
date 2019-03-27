@@ -29,8 +29,6 @@ public class ControllerPopupPombo {
         pombo.getChildren().add(Controller.animacaoPombo.getPomboVoando());
         pombo.getChildren().add(Controller.animacaoPombo.getPomboParado());
         mainController.grupoPombo.getChildren().add(pombo);
-        //mainController.idJanela.getChildren().add(Controller.animacaoPombo.getPomboVoando());
-        //mainController.idJanela.getChildren().add(Controller.animacaoPombo.getPomboParado());
 
         System.out.println(Controller.buffer.getCarga());
 

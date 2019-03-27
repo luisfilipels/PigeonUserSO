@@ -103,17 +103,11 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //tableID = new TableColumn("id");
-        //tableStatus = new TableColumn("status");
-        //tableUsers.getColumns().addAll(tableID, tableStatus);
         TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         listaUsuarios = FXCollections.observableArrayList();
         tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
         tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
-        //tableUsers.setEditable(true);
         tableUsers.setItems(listaUsuarios);
-        //tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
-		//tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
 
 
 
@@ -172,7 +166,6 @@ public class Controller {
         Parent root = loader.load();
         popup.setTitle("Criar pombo");
         popup.setResizable(false);
-        //secController.setMainController(this);
         popup.setScene(new Scene(root, 500, 375));
         popup.show();
     }
@@ -181,11 +174,6 @@ public class Controller {
 
         popUpPombo();
 
-    }
-
-    public void adicionarAJanela (UsuarioAnimacao animacao) {
-        idJanela.getChildren().add(animacao.getUsuarioEmMovimento());
-        idJanela.getChildren().add(animacao.getUsuarioEscrevendo());
     }
 
     @FXML
@@ -211,9 +199,6 @@ public class Controller {
     void matarEscritor(ActionEvent event) {
         String idLido = fieldDeletaUsuario.getText();
         System.out.println(grupoUsuario.getChildren().size());
-        //for (int i = 0; i < tableUsers.getRowCount(); i++) {
-        //    if (tableUsers.getChildren().get(i).)
-        //}
         for (int i = 0; i < listaEscritores.size(); i++) {
             if (listaEscritores.get(i).getsId().equals(idLido)) {
                 listaEscritores.get(i).matar();
@@ -226,13 +211,11 @@ public class Controller {
                 System.out.println("Usuario removido");
             }
         }
-    }
-
-    @FXML
-    void handleID() {
-        currentID = Integer.parseInt(textField.getText());
-        System.out.println("Input recebido");
-        System.out.println("id armazenada: " + currentID);
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if (listaUsuarios.get(i).getId().equals(fieldDeletaUsuario.getText())) {
+                listaUsuarios.remove(i);
+            }
+        }
     }
 
 

@@ -30,7 +30,7 @@
                 </ImageView>
             </children>
         </AnchorPane>
-        <HBox layoutX="429.0" layoutY="528.0">
+        <HBox layoutX="430.0" layoutY="488.0">
             <children>
                 <Button fx:id="btPombo" maxWidth="150.0" mnemonicParsing="false" onAction="#acaoPombo" onMouseEntered="#handleButtonPomboMouseIn" onMouseExited="#handleButtonPomboMouseOut" text="c pombo" />
                 <Button fx:id="btCriaUsuario" maxWidth="150.0" mnemonicParsing="false" onAction="#criarEscritor" onMouseEntered="#handleButtonCriaUsuarioMouseIn" onMouseExited="#handleButtonCriaUsuarioMouseOut" text="c usuario" />
@@ -38,7 +38,7 @@
                 <VBox />
             </children>
         </HBox>
-        <AnchorPane layoutX="474.0" layoutY="385.0" prefHeight="143.0" prefWidth="103.0">
+        <AnchorPane layoutX="519.0" layoutY="350.0" prefHeight="143.0" prefWidth="103.0">
             <children>
                 <ImageView fitHeight="143.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -47,7 +47,7 @@
                 </ImageView>
             </children>
         </AnchorPane>
-        <TextField fx:id="fieldDeletaUsuario" layoutX="831.0" layoutY="497.0" onAction="#matarEscritor" prefHeight="31.0" prefWidth="131.0" />
+        <TextField fx:id="fieldDeletaUsuario" layoutX="829.0" layoutY="457.0" onAction="#matarEscritor" prefHeight="31.0" prefWidth="131.0" AnchorPane.rightAnchor="40.0" />
         <GridPane fx:id="TabelaUsuarios" gridLinesVisible="true" layoutX="-12.0" layoutY="379.0" prefHeight="299.0" prefWidth="401.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="240.0" />

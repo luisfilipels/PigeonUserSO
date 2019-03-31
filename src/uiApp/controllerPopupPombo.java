@@ -37,7 +37,6 @@ public class ControllerPopupPombo {
         mainController.td = Integer.parseInt(tdField.getText());
         mainController.tv = Integer.parseInt(tvField.getText());
         mainController.buffer.setCarga(Integer.parseInt(numCartas.getText()));
-        //mainController.buffer.full.release(mainController.buffer.mensagens/mainController.buffer.getCarga());
         mainController.animacaoPombo = new PomboAnimacao();
         Group pombo = new Group();
         Controller.pomboVivo = true;

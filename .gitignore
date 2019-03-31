@@ -11,3 +11,4 @@ CMakeLists.txt
 *.iml
 out/
 *.blend1
+/2D Assets/SpritesBkp

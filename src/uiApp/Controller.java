@@ -34,7 +34,7 @@ public class Controller {
     private ImageView idMapa;
 
     @FXML
-    private Button btPombo;
+    public Button btPombo;
 
     @FXML
     private AnchorPane idBuffer;
@@ -60,9 +60,15 @@ public class Controller {
     @FXML
     public Label testLabel;
 
-    final static Image ADDUS01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuario1x.png").toString());
-    final static Image KILLUS01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1x.png").toString());
+    final static Image ADDUSNORM01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuario1x.png").toString());
+    final static Image ADDUSHOVER01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuarioHver1x.png").toString());
+    final static Image KILLUS01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1xNormal.png").toString());
+    final static Image KILLUSHOVER01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1x.png").toString());
+
     final static Image ADDPB01 = new Image(PomboAnimacao.class.getResource("/PomboNormal1x.png").toString());
+    final static Image KILLPB01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboNormal1x.png").toString());
+    final static Image ADDPBHOVER01 = new Image(PomboAnimacao.class.getResource("/PomboHover1x.png").toString());
+    final static Image KILLPBHOVER01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboHover1x.png").toString());
 
     public ControllerPopupUsuario popupUsuario;
     public ControllerPopupPombo popupPombo;
@@ -73,9 +79,56 @@ public class Controller {
 
     public ObservableList<Usuario> listaUsuarios;
 
+    @FXML
+    private void handleButtonCriaUsuarioMouseIn () {
+        ImageView addUsuario01 = new ImageView(ADDUSHOVER01);
+        btCriaUsuario.setGraphic(addUsuario01);
+    }
+
+    @FXML
+    private void handleButtonCriaUsuarioMouseOut () {
+        ImageView addUsuario01 = new ImageView(ADDUSNORM01);
+        btCriaUsuario.setGraphic(addUsuario01);
+    }
+
+    @FXML
+    private void handleButtonMataUsuarioMouseIn () {
+        ImageView addUsuario01 = new ImageView(KILLUSHOVER01);
+        btMataUsuario.setGraphic(addUsuario01);
+    }
+
+    @FXML
+    private void handleButtonMataUsuarioMouseOut () {
+        ImageView addUsuario01 = new ImageView(KILLUS01);
+        btMataUsuario.setGraphic(addUsuario01);
+    }
+
+    @FXML
+    private void handleButtonPomboMouseIn () {
+        if (pomboVivo) {
+            ImageView mataPombo01 = new ImageView(KILLPBHOVER01);
+            btPombo.setGraphic(mataPombo01);
+        } else {
+            ImageView addPombo01 = new ImageView(ADDPBHOVER01);
+            btPombo.setGraphic(addPombo01);
+        }
+
+    }
+
+    @FXML
+    private void handleButtonPomboMouseOut () {
+        if (pomboVivo) {
+            ImageView mataPombo01 = new ImageView(KILLPB01);
+            btPombo.setGraphic(mataPombo01);
+        } else {
+            ImageView addPombo01 = new ImageView(ADDPB01);
+            btPombo.setGraphic(addPombo01);
+        }
+    }
+
 	@FXML
 	private void initialize() {
-		ImageView addUsuario01 = new ImageView(ADDUS01);
+		ImageView addUsuario01 = new ImageView(ADDUSNORM01);
 		btCriaUsuario.setGraphic(addUsuario01);
 		btCriaUsuario.setBackground(null);
 		
@@ -92,12 +145,8 @@ public class Controller {
 		ImageView addPombo01 = new ImageView(ADDPB01);
 		btPombo.setGraphic(addPombo01);
 		btPombo.setBackground(null);
-		//TabelaNumCartas = new Label();
-        //TabelaUsuarios.add(TabelaNumCartas, 1, 1);
 		idJanela.getChildren().add(grupoUsuario);
 		idJanela.getChildren().add(grupoPombo);
-		//TabelaNumCartas.ed
-        //TabelaNumCartas.setText("AAAAA");
 
 		ControllerPopupUsuario.mainController = this;
 		ControllerPopupPombo.mainController = this;
@@ -111,37 +160,20 @@ public class Controller {
         TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         listaUsuarios = FXCollections.observableArrayList();
         tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
-        //tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
         tableUsers.setItems(listaUsuarios);
 
 
 
 	}
-	int intTabela = 0;
 	public void atualizaTabela () {
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 testLabel.setText(Integer.toString(buffer.mensagens));
-                //intTabela = Integer.parseInt(testLabel.getText());
-                //System.out.println("Valor tabela: " + testLabel.getText());
-                //intTabela++;
-                //System.out.println("Valor: " + intTabela);
-                //testLabel.setText(Integer.toString(intTabela));
             }
         });
-        //TabelaNumCartas.setText("ASDSADWAEW");
     }
-    //public void decrementaTabela () {
-	//    Platform.runLater(new Runnable() {
-    //        @Override
-    //        public void run() {
-    //            intTabela = Integer.parseInt(testLabel.getText());
-    //            intTabela--;
-    //            testLabel.setText(Integer.toString(intTabela));
-    //        }
-    //    });
-    //}
+
 
 	public void popupM () throws Exception{
         Stage popup = new Stage();
@@ -194,7 +226,6 @@ public class Controller {
         popup.setResizable(false);
         popup.setScene(new Scene(root, 500, 375));
         popup.show();
-        //this.testLabel.setText("Criou pombo");
     }
 
     private void criarPombo() throws Exception{

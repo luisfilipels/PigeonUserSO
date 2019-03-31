@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class ControllerPopupPombo {
@@ -44,6 +45,8 @@ public class ControllerPopupPombo {
         pombo.getChildren().add(mainController.animacaoPombo.getPomboVoando());
         pombo.getChildren().add(mainController.animacaoPombo.getPomboParado());
         mainController.grupoPombo.getChildren().add(pombo);
+        ImageView mataPombo01 = new ImageView(mainController.KILLPB01);
+        mainController.btPombo.setGraphic(mataPombo01);
 
         System.out.println(mainController.buffer.getCarga());
 

@@ -32,9 +32,9 @@
         </AnchorPane>
         <HBox layoutX="429.0" layoutY="528.0">
             <children>
-                <Button fx:id="btPombo" maxWidth="150.0" mnemonicParsing="false" onAction="#acaoPombo" text="c pombo" />
-                <Button fx:id="btCriaUsuario" maxWidth="150.0" mnemonicParsing="false" onAction="#criarEscritor" text="c usuario" />
-                <Button fx:id="btMataUsuario" maxWidth="150.0" mnemonicParsing="false" onAction="#matarEscritor" text="m usuario" />
+                <Button fx:id="btPombo" maxWidth="150.0" mnemonicParsing="false" onAction="#acaoPombo" onMouseEntered="#handleButtonPomboMouseIn" onMouseExited="#handleButtonPomboMouseOut" text="c pombo" />
+                <Button fx:id="btCriaUsuario" maxWidth="150.0" mnemonicParsing="false" onAction="#criarEscritor" onMouseEntered="#handleButtonCriaUsuarioMouseIn" onMouseExited="#handleButtonCriaUsuarioMouseOut" text="c usuario" />
+                <Button fx:id="btMataUsuario" maxWidth="150.0" mnemonicParsing="false" onAction="#matarEscritor" onMouseEntered="#handleButtonMataUsuarioMouseIn" onMouseExited="#handleButtonMataUsuarioMouseOut" text="m usuario" />
                 <VBox />
             </children>
         </HBox>

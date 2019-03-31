@@ -14,11 +14,13 @@ public class Buffer {
     private int indiceEntrada = 0;
     private int indiceSaida = 0;
     public int mensagens = 0;
-    private Semaphore empty, mutex, full;
+    public Semaphore empty, mutex, full;
     public boolean pomboCarregando;
     public static Controller mainController;
+    public int tamanho;
 
     public Buffer(int tamanho, int carga, Controller mainController){
+        this.tamanho = tamanho;
         empty = new Semaphore(tamanho);
         full = new Semaphore(0);
         mutex = new Semaphore(1);
@@ -44,11 +46,6 @@ public class Buffer {
 
         executando(1000);
         mainController.atualizaTabela();
-        //Controller.TabelaNumCartas.setText("2");
-        //String strCartas = Controller.TabelaNumCartas.getText();
-        //int numCartas = Integer.parseInt(strCartas);
-        //Controller.TabelaNumCartas.setText(Integer.toString(numCartas+1));
-
 
         buffer[indiceEntrada] = valor;
         indiceEntrada = (indiceEntrada+1) % buffer.length;
@@ -60,8 +57,9 @@ public class Buffer {
 
         if(mensagens%carga == 0 && mensagens > 0){
             full.release();
+            System.out.printf("mensagens = %d; carga = %d ", mensagens, carga);
         }
-
+        System.out.println(full.toString());
     }
 
 
@@ -72,25 +70,18 @@ public class Buffer {
         if(mensagens < carga) {
             System.out.println("Carga insuficiente, Pombo espera");
             pomboAnimado.dormir();
-            //mutex.release();
-            //full.acquire();
-            //while (mensagens < carga) {
-
-            //}
-            //mutex.acquire();
         }
         mutex.release();
 
         full.acquire();
-        mutex.acquire();
-        
+        //mutex.acquire();
+        System.out.println(mensagens + " " + carga);
 
-        
 
+        pomboCarregando = true;
         for(int i=0; i<carga; i++) {
-        	pomboCarregando = true;
+            executando((tc*1500)/carga);
             pomboAnimado.carregando(tc/carga);
-            executando((tc*500)/carga);
 
             saida[i] = buffer[indiceSaida];
             buffer[indiceSaida] = null;
@@ -100,9 +91,10 @@ public class Buffer {
 
             empty.release();
             System.out.println("Pombo carregando "+saida[i]);
-            pomboCarregando = false;
         }
-        mutex.release();
+        pomboCarregando = false;
+
+        //mutex.release();
 
         System.out.println("-----buffer-----\n");
         for(int i=0; i<buffer.length; i++)
@@ -119,6 +111,7 @@ public class Buffer {
     public void setCarga(int carga) {
         if (carga <= buffer.length) {
             this.carga = carga;
+            full.release(mensagens/carga);
         }
         else {
             System.out.println("Valor inválido para negocio.");

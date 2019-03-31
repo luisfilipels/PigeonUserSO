@@ -27,7 +27,8 @@ public class Pombo implements Runnable{
     public void run() {
         while(running) {
             Mensagem[] cartas;
-            System.out.println("Pombo vivo!");
+            //System.out.println("Pombo vivo!");
+            //System.out.println(this.buffer.mensagens + " " + this.buffer.getCarga());
             try {
                 cartas = buffer.removeCarta(tc, animacao);
                 //buffer.removeCarta(tc, animacao);

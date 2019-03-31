@@ -46,9 +46,6 @@ public class Controller {
     private Button btMataUsuario;
 
     @FXML
-    public static Label TabelaNumCartas = new Label();
-
-    @FXML
     public GridPane TabelaUsuarios;
 
     @FXML
@@ -87,8 +84,10 @@ public class Controller {
 		btMataUsuario.setBackground(null);
 		testLabel = new Label();
 		testLabel.setText("0");
-		testLabel.setTranslateX(800);
-		testLabel.setTranslateY(300);
+		testLabel.setTranslateX(315);
+		testLabel.setTranslateY(553);
+		testLabel.setScaleX(3);
+		testLabel.setScaleY(3);
 		idJanela.getChildren().add(testLabel);
 		ImageView addPombo01 = new ImageView(ADDPB01);
 		btPombo.setGraphic(addPombo01);
@@ -98,7 +97,7 @@ public class Controller {
 		idJanela.getChildren().add(grupoUsuario);
 		idJanela.getChildren().add(grupoPombo);
 		//TabelaNumCartas.ed
-        TabelaNumCartas.setText("AAAAA");
+        //TabelaNumCartas.setText("AAAAA");
 
 		ControllerPopupUsuario.mainController = this;
 		ControllerPopupPombo.mainController = this;
@@ -112,7 +111,7 @@ public class Controller {
         TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         listaUsuarios = FXCollections.observableArrayList();
         tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
-        tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
+        //tableStatus.setCellValueFactory(new PropertyValueFactory<Usuario, String>("status"));
         tableUsers.setItems(listaUsuarios);
 
 
@@ -160,10 +159,7 @@ public class Controller {
     }
     public Buffer buffer = new Buffer(10, 4, this);
 
-    //public listaDados listaDados = new listaDados();
-
     public static boolean pomboVivo = false;
-    public int idUsuario = 0;
     public ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();
     public ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();
     public static Pombo pombo;
@@ -251,10 +247,13 @@ public class Controller {
 
     private void matarPombo() {
         if (!buffer.pomboCarregando) {
+            pombo.matar();
             pombo = null;
             //pombo.matar();
             //pombo = null;
             grupoPombo.getChildren().remove(0);
+            System.out.println("Pombo morto...");
+            pomboVivo = false;
         } else {
             System.out.println("Pombo não pode ser morto agora!");
         }
@@ -268,16 +267,15 @@ public class Controller {
             btPombo.setText("Matar Pombo");
             criarPombo();
 
-            pomboVivo = true;
+            //pomboVivo = true;
 
-            System.out.println("Pombo criado...");
+            //System.out.println("Pombo criado...");
         }
         else
         {
-            pomboVivo = false;
+            //pomboVivo = false;
             btPombo.setText("Criar Pombo");
             matarPombo();
-            System.out.println("Pombo morto...");
         }
 
     }

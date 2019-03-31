@@ -44,14 +44,14 @@ public class Escritor implements Runnable{
         while(this.running) {
             try {
                 escreveCarta();
-                System.out.println(mainController.tableUsers.getItems().size());
+                //System.out.println(mainController.tableUsers.getItems().size());
                 animacao.escrever(tmpEscrita);
                 executando(tmpEscrita);
                 //enviaCarta();
                 MsgEmPosse = null;
-                buffer.insereCarta(new Mensagem(id, cont), animacao);
-                System.out.println(mainController.tableUsers.getItems().size());
-                if (!this.running) {
+                if (this.running) {
+                    buffer.insereCarta(new Mensagem(id, cont), animacao);
+                } else {
                     break;
                 }
 

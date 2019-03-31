@@ -18,15 +18,17 @@ public class ControllerPopupUsuario {
 
     @FXML
     public void handleUsuarioButton(ActionEvent event) {
-        UsuarioAnimacao animacao = new UsuarioAnimacao();
+        String idEscritor = idField.getText();
+
+        UsuarioAnimacao animacao = new UsuarioAnimacao(idEscritor);
         mainController.animacaosEscritor.add(animacao);
-        mainController.listaEscritores.add(new Escritor(mainController.buffer, idField.getText(), 1000*Integer.parseInt(teField.getText()), mainController.animacaosEscritor.get(mainController.animacaosEscritor.size()-1), mainController));
+        mainController.listaEscritores.add(new Escritor(mainController.buffer, idEscritor , 1000*Integer.parseInt(teField.getText()), mainController.animacaosEscritor.get(mainController.animacaosEscritor.size()-1), mainController));
         Group animacaoUsuario = new Group();
         animacaoUsuario.setAccessibleText(idField.getText());
         animacaoUsuario.getChildren().add(animacao.getUsuarioEmMovimento());
         animacaoUsuario.getChildren().add(animacao.getUsuarioEscrevendo());
         mainController.grupoUsuario.getChildren().add(animacaoUsuario);
-        mainController.listaUsuarios.add(new Usuario(idField.getText(), "Ocioso"));
+        mainController.listaUsuarios.add(new Usuario(idField.getText()));
 
         System.out.println("Usuario Criado.");
 
@@ -34,5 +36,12 @@ public class ControllerPopupUsuario {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
 
+    }
+
+    @FXML
+    public void handleCancelarButton(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }

@@ -5,11 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 public class Usuario {
 
     public final SimpleStringProperty id;
-    public final SimpleStringProperty status;
+    //public final SimpleStringProperty status;
 
-    public Usuario(String id, String Status) {
+    public Usuario(String id) {
         this.id = new SimpleStringProperty(id);
-        this.status = new SimpleStringProperty(Status);
+        //this.status = new SimpleStringProperty(Status);
     }
 
     public String getId() {
@@ -19,13 +19,4 @@ public class Usuario {
     public void setId(String id) {
         this.id.set(id);
     }
-
-    public String getStatus() {
-        return status.get();
-    }
-
-    public void setStatus(String status) {
-        this.status.set(status);
-    }
-
 }

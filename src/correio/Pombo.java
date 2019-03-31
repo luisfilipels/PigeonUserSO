@@ -40,14 +40,14 @@ public class Pombo implements Runnable{
             executando(tc);
 
             System.out.println("Pombo voando...\n");
-            animacao.vooIda(tv/5);
+            animacao.vooIda(tv/2);
             executando(1000*tv/2);
 
             System.out.println("Pombo descarregando...\n");
             executando(td*1000);
 
             System.out.println("Pombo voltando...\n");
-            animacao.vooVolta(tv/5);
+            animacao.vooVolta(tv/2);
             executando(1000*tv/2);
 
             System.out.println("Pombo voltou!\n");

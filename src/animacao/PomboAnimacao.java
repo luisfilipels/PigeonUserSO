@@ -51,7 +51,10 @@ public class PomboAnimacao {
     final static Image CARREGAR12 = new Image(PomboAnimacao.class.getResource("/Carregar12.png").toString());
     final static Image CARREGAR13 = new Image(PomboAnimacao.class.getResource("/Carregar13.png").toString());
 
-
+    final static Image BOOM1 = new Image(PomboAnimacao.class.getResource("/Boom1.png").toString());
+    final static Image BOOM2 = new Image(PomboAnimacao.class.getResource("/Boom2.png").toString());
+    final static Image BOOM3 = new Image(PomboAnimacao.class.getResource("/Boom3.png").toString());
+    final static Image BOOM4 = new Image(PomboAnimacao.class.getResource("/Boom4.png").toString());
 
     final static Image DORMIR = new Image(PomboAnimacao.class.getResource("/dormir4.png").toString());
 
@@ -184,13 +187,13 @@ public class PomboAnimacao {
 
         Path path = new Path();
         path.getElements().add (new MoveTo (x, y));
-        path.getElements().add (new LineTo (550, 250));
-        path.getElements().add (new LineTo (590, 246));
-        path.getElements().add (new LineTo (640, 230));
-        path.getElements().add (new LineTo (780, 220));
-        path.getElements().add (new LineTo (1350, 190));
-        path.getElements().add (new LineTo (1700, 100));
-
+        path.getElements().add (new LineTo (578, 266));
+        path.getElements().add (new LineTo (627, 200));
+        path.getElements().add (new LineTo (667, 139));
+        path.getElements().add (new LineTo (717, 89));
+        path.getElements().add (new LineTo (784, 31));
+        path.getElements().add (new LineTo (800, -20));
+        path.getElements().add (new LineTo (910, -100));
 
         PathTransition transition = new PathTransition();
         transition.setDuration(Duration.seconds(duracao));
@@ -299,13 +302,14 @@ public class PomboAnimacao {
 
 
         Path path = new Path();
-        path.getElements().add (new MoveTo (1700, 100));
-        path.getElements().add (new LineTo (1350, 190));
-        path.getElements().add (new LineTo (780, 220));
-        path.getElements().add (new LineTo (640, 230));
-        path.getElements().add (new LineTo (590, 246));
-        path.getElements().add (new LineTo (590, 246));
-        path.getElements().add (new LineTo (x, y));
+        path.getElements().add (new MoveTo (910, -100));
+        path.getElements().add (new LineTo (800, -20));
+        path.getElements().add (new LineTo (784, 31));
+        path.getElements().add (new LineTo (717, 89));
+        path.getElements().add (new LineTo (667, 139));
+        path.getElements().add (new LineTo (627, 200));
+        path.getElements().add (new LineTo (578, 280));
+        path.getElements().add (new LineTo (578, 330));
 
         PathTransition transition = new PathTransition();
         transition.setDuration(Duration.seconds(duracao));
@@ -391,22 +395,6 @@ public class PomboAnimacao {
         t.play();
 
 
-    	/*
-		KeyValue image1 = new KeyValue(pb00.imageProperty(), PBC02);
-		KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(duracao/3),image1);
-
-		KeyValue image2 = new KeyValue(pb00.imageProperty(), PBC03);
-		KeyFrame keyFrame2 = new KeyFrame(Duration.seconds((2/3)*duracao), image2);
-
-		KeyValue image3 = new KeyValue(pb00.imageProperty(), PBC01);
-		KeyFrame keyFrame3 = new KeyFrame(Duration.seconds(duracao), image3);
-
-
-		Timeline timeline = new Timeline();
-		timeline.setCycleCount(1);
-		timeline.getKeyFrames().addAll(keyFrame1, keyFrame2, keyFrame3);
-		timeline.play();
-		*/
     }
 
     public void dormir() {
@@ -439,5 +427,57 @@ public class PomboAnimacao {
 
     public Group getPomboMapa() {
         return pomboMapa;
+    }
+
+    public void boom() {
+
+        ImageView boom1, boom2, boom3, boom4;
+
+        boom1 = new ImageView(BOOM1);
+        boom2 = new ImageView(BOOM2);
+        boom3 = new ImageView(BOOM3);
+        boom4 = new ImageView(BOOM4);
+
+
+        Timeline t = new Timeline();
+        t.setCycleCount(1);
+
+
+        t.getKeyFrames().add(new KeyFrame(
+                Duration.seconds(50),
+                (ActionEvent event) -> {
+                    pomboVoando.getChildren().setAll(boom1);
+                    pomboCarregando.getChildren().setAll(boom1);
+                }
+        ));
+
+
+        t.getKeyFrames().add(new KeyFrame(
+                Duration.seconds(100),
+                (ActionEvent event) -> {
+                    pomboVoando.getChildren().setAll(boom2);
+                    pomboCarregando.getChildren().setAll(boom2);
+                }
+        ));
+
+        t.getKeyFrames().add(new KeyFrame(
+                Duration.seconds(150),
+                (ActionEvent event) -> {
+                    pomboVoando.getChildren().setAll(boom3);
+                    pomboCarregando.getChildren().setAll(boom3);
+                }
+        ));
+
+
+        t.getKeyFrames().add(new KeyFrame(
+                Duration.seconds(200),
+                (ActionEvent event) -> {
+                    pomboVoando.getChildren().setAll(boom4);
+                    pomboCarregando.getChildren().setAll(boom4);
+                }
+        ));
+
+        t.play();
+
     }
 }

@@ -74,7 +74,7 @@ public class Buffer {
         mutex.release();
 
         full.acquire();
-        //mutex.acquire();
+        mutex.acquire();
         System.out.println(mensagens + " " + carga);
 
 
@@ -94,7 +94,7 @@ public class Buffer {
         }
         pomboCarregando = false;
 
-        //mutex.release();
+        mutex.release();
 
         System.out.println("-----buffer-----\n");
         for(int i=0; i<buffer.length; i++)

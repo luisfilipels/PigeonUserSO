@@ -15,12 +15,12 @@ import javafx.event.ActionEvent;
 public class UsuarioAnimacao {
 
     private int x, y;
-    private final static Image US01 = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent.png").toString());
-    private final static Image US0_SLEEP = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent_sleep.png").toString());
-    private final static Image US0_CARTA = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent_carta.png").toString());
-    private final static Image US0_ESC1 = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent.esc01png.png").toString());
-    private final static Image US0_ESC2 = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent.esc02png.png").toString());
-    private final static Image US0_ESC3 = new Image(UsuarioAnimacao.class.getResource("/lolli_50cent.esc03png.png").toString());
+    private final static Image US01 = new Image(UsuarioAnimacao.class.getResource("/Dormindo1.png").toString());
+    private final static Image US0_SLEEP = new Image(UsuarioAnimacao.class.getResource("/Dormindo3.png").toString());
+    private final static Image US0_CARTA = new Image(UsuarioAnimacao.class.getResource("/Entregando.png").toString());
+    private final static Image US0_ESC1 = new Image(UsuarioAnimacao.class.getResource("/Escrevendo1.png").toString());
+    private final static Image US0_ESC2 = new Image(UsuarioAnimacao.class.getResource("/Escrevendo2.png").toString());
+    private final static Image US0_ESC3 = new Image(UsuarioAnimacao.class.getResource("/Escrevendo3.png").toString());
 
     private ImageView us00, us01;
     private Group usuarioEscrevendo, usuarioEmMovimento;

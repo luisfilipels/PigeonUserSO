@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pigeonuserso" default="all">
+  
+  
+  <property file="pigeonuserso.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.klib"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.zip"/>
+    <include name="*.ane"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.11" value="${jdk.home.11}/bin"/>
+  <path id="jdk.classpath.11">
+    <fileset dir="${jdk.home.11}">
+      <include name="../jdk-11.0.2!/java.base"/>
+      <include name="../jdk-11.0.2!/java.compiler"/>
+      <include name="../jdk-11.0.2!/java.datatransfer"/>
+      <include name="../jdk-11.0.2!/java.desktop"/>
+      <include name="../jdk-11.0.2!/java.instrument"/>
+      <include name="../jdk-11.0.2!/java.logging"/>
+      <include name="../jdk-11.0.2!/java.management"/>
+      <include name="../jdk-11.0.2!/java.management.rmi"/>
+      <include name="../jdk-11.0.2!/java.naming"/>
+      <include name="../jdk-11.0.2!/java.net.http"/>
+      <include name="../jdk-11.0.2!/java.prefs"/>
+      <include name="../jdk-11.0.2!/java.rmi"/>
+      <include name="../jdk-11.0.2!/java.scripting"/>
+      <include name="../jdk-11.0.2!/java.se"/>
+      <include name="../jdk-11.0.2!/java.security.jgss"/>
+      <include name="../jdk-11.0.2!/java.security.sasl"/>
+      <include name="../jdk-11.0.2!/java.smartcardio"/>
+      <include name="../jdk-11.0.2!/java.sql"/>
+      <include name="../jdk-11.0.2!/java.sql.rowset"/>
+      <include name="../jdk-11.0.2!/java.transaction.xa"/>
+      <include name="../jdk-11.0.2!/java.xml"/>
+      <include name="../jdk-11.0.2!/java.xml.crypto"/>
+      <include name="../jdk-11.0.2!/jdk.accessibility"/>
+      <include name="../jdk-11.0.2!/jdk.aot"/>
+      <include name="../jdk-11.0.2!/jdk.attach"/>
+      <include name="../jdk-11.0.2!/jdk.charsets"/>
+      <include name="../jdk-11.0.2!/jdk.compiler"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.cryptoki"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.ec"/>
+      <include name="../jdk-11.0.2!/jdk.crypto.mscapi"/>
+      <include name="../jdk-11.0.2!/jdk.dynalink"/>
+      <include name="../jdk-11.0.2!/jdk.editpad"/>
+      <include name="../jdk-11.0.2!/jdk.hotspot.agent"/>
+      <include name="../jdk-11.0.2!/jdk.httpserver"/>
+      <include name="../jdk-11.0.2!/jdk.internal.ed"/>
+      <include name="../jdk-11.0.2!/jdk.internal.jvmstat"/>
+      <include name="../jdk-11.0.2!/jdk.internal.le"/>
+      <include name="../jdk-11.0.2!/jdk.internal.opt"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.ci"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.compiler"/>
+      <include name="../jdk-11.0.2!/jdk.internal.vm.compiler.management"/>
+      <include name="../jdk-11.0.2!/jdk.jartool"/>
+      <include name="../jdk-11.0.2!/jdk.javadoc"/>
+      <include name="../jdk-11.0.2!/jdk.jcmd"/>
+      <include name="../jdk-11.0.2!/jdk.jconsole"/>
+      <include name="../jdk-11.0.2!/jdk.jdeps"/>
+      <include name="../jdk-11.0.2!/jdk.jdi"/>
+      <include name="../jdk-11.0.2!/jdk.jdwp.agent"/>
+      <include name="../jdk-11.0.2!/jdk.jfr"/>
+      <include name="../jdk-11.0.2!/jdk.jlink"/>
+      <include name="../jdk-11.0.2!/jdk.jshell"/>
+      <include name="../jdk-11.0.2!/jdk.jsobject"/>
+      <include name="../jdk-11.0.2!/jdk.jstatd"/>
+      <include name="../jdk-11.0.2!/jdk.localedata"/>
+      <include name="../jdk-11.0.2!/jdk.management"/>
+      <include name="../jdk-11.0.2!/jdk.management.agent"/>
+      <include name="../jdk-11.0.2!/jdk.management.jfr"/>
+      <include name="../jdk-11.0.2!/jdk.naming.dns"/>
+      <include name="../jdk-11.0.2!/jdk.naming.rmi"/>
+      <include name="../jdk-11.0.2!/jdk.net"/>
+      <include name="../jdk-11.0.2!/jdk.pack"/>
+      <include name="../jdk-11.0.2!/jdk.rmic"/>
+      <include name="../jdk-11.0.2!/jdk.scripting.nashorn"/>
+      <include name="../jdk-11.0.2!/jdk.scripting.nashorn.shell"/>
+      <include name="../jdk-11.0.2!/jdk.sctp"/>
+      <include name="../jdk-11.0.2!/jdk.security.auth"/>
+      <include name="../jdk-11.0.2!/jdk.security.jgss"/>
+      <include name="../jdk-11.0.2!/jdk.unsupported"/>
+      <include name="../jdk-11.0.2!/jdk.unsupported.desktop"/>
+      <include name="../jdk-11.0.2!/jdk.xml.dom"/>
+      <include name="../jdk-11.0.2!/jdk.zipfs"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx-swt.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.base.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.controls.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.fxml.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.graphics.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.media.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.properties"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.swing.jar"/>
+      <include name="../javafx-sdk-11.0.2/lib/javafx.web.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.11}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.11}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.11"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.javafx-swt.classpath">
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx-swt.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.base.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.controls.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.fxml.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.graphics.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.media.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.swing.jar"/>
+    <pathelement location="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.web.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <path id="library.javafx-swt.classpath">
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx-swt.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.base.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.controls.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.fxml.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.graphics.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.media.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.swing.jar"/>
+    <pathelement location="C:/Program Files/Java/javafx-sdk-11.0.2/lib/javafx.web.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="forms-*.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module PigeonUserSO -->
+  
+  <dirname property="module.pigeonuserso.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.pigeonuserso" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.pigeonuserso" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.pigeonuserso" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.pigeonuserso" value="-encoding windows-1252 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="pigeonuserso.output.dir" value="${module.pigeonuserso.basedir}/out/production/PigeonUserSO"/>
+  <property name="pigeonuserso.testoutput.dir" value="${module.pigeonuserso.basedir}/out/test/PigeonUserSO"/>
+  
+  <path id="pigeonuserso.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="pigeonuserso.module.production.classpath">
+    <path refid="${module.jdk.classpath.pigeonuserso}"/>
+    <path refid="library.javafx-swt.classpath"/>
+  </path>
+  
+  <path id="pigeonuserso.runtime.production.module.classpath">
+    <pathelement location="${pigeonuserso.output.dir}"/>
+    <path refid="library.javafx-swt.classpath"/>
+  </path>
+  
+  <path id="pigeonuserso.module.classpath">
+    <path refid="${module.jdk.classpath.pigeonuserso}"/>
+    <pathelement location="${pigeonuserso.output.dir}"/>
+    <path refid="library.javafx-swt.classpath"/>
+  </path>
+  
+  <path id="pigeonuserso.runtime.module.classpath">
+    <pathelement location="${pigeonuserso.testoutput.dir}"/>
+    <pathelement location="${pigeonuserso.output.dir}"/>
+    <path refid="library.javafx-swt.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.pigeonuserso">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.pigeonuserso">
+    <patternset refid="excluded.from.module.pigeonuserso"/>
+  </patternset>
+  
+  <path id="pigeonuserso.module.sourcepath">
+    <dirset dir="${module.pigeonuserso.basedir}">
+      <include name="src"/>
+      <include name="res"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.pigeonuserso" depends="compile.module.pigeonuserso.production,compile.module.pigeonuserso.tests" description="Compile module PigeonUserSO"/>
+  
+  <target name="compile.module.pigeonuserso.production" depends="register.custom.compilers" description="Compile module PigeonUserSO; production classes">
+    <mkdir dir="${pigeonuserso.output.dir}"/>
+    <javac2 destdir="${pigeonuserso.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.pigeonuserso}/javac">
+      <compilerarg line="${compiler.args.pigeonuserso}"/>
+      <bootclasspath refid="pigeonuserso.module.bootclasspath"/>
+      <classpath refid="pigeonuserso.module.production.classpath"/>
+      <src refid="pigeonuserso.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.pigeonuserso"/>
+    </javac2>
+    
+    <copy todir="${pigeonuserso.output.dir}">
+      <fileset dir="${module.pigeonuserso.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.pigeonuserso.basedir}/res">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.pigeonuserso.tests" depends="register.custom.compilers,compile.module.pigeonuserso.production" description="compile module PigeonUserSO; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.pigeonuserso" description="cleanup module">
+    <delete dir="${pigeonuserso.output.dir}"/>
+    <delete dir="${pigeonuserso.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.pigeonuserso, clean.artifact.pigeonuserso" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.pigeonuserso" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.pigeonuserso" value="${basedir}/out/artifacts/PigeonUserSO"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="artifact.temp.output.PigeonUserSO" value="${artifacts.temp.dir}/PigeonUserSO.jar"/>
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${jdk.home.11}/lib/ant-javafx.jar"/>
+  </target>
+  
+  <target name="clean.artifact.pigeonuserso" description="clean PigeonUserSO artifact output">
+    <delete dir="${artifact.output.pigeonuserso}"/>
+  </target>
+  
+  <target name="artifact.pigeonuserso" depends="init.artifacts, compile.module.pigeonuserso" description="Build &#39;PigeonUserSO&#39; artifact" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <mkdir dir="${artifact.output.pigeonuserso}"/>
+    <copy todir="${artifact.temp.output.PigeonUserSO}">
+      <fileset dir="${pigeonuserso.output.dir}"/>
+    </copy>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx-swt.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx-swt.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.base.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.base.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.controls.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.controls.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.fxml.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.fxml.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.graphics.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.graphics.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.media.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.media.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.swing.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.swing.jar"/>
+    <copy file="${basedir}/../../../../../../../Program Files/Java/javafx-sdk-11.0.2/lib/javafx.web.jar" tofile="${artifact.temp.output.PigeonUserSO}/javafx.web.jar"/>
+    <fx:fileset id="all_but_PigeonUserSO" dir="${artifact.temp.output.PigeonUserSO}" includes="**/*.jar">
+      <exclude name="PigeonUserSO.jar"/>
+    </fx:fileset>
+    <fx:fileset id="all_PigeonUserSO" dir="${artifact.temp.output.PigeonUserSO}" includes="**/*.jar"/>
+    <fx:application id="PigeonUserSO_id" name="PigeonUserSO" mainClass="uiApp.Main"/>
+    <fx:jar destfile="${artifact.temp.output.PigeonUserSO}/PigeonUserSO.jar">
+      <fx:application refid="PigeonUserSO_id"/>
+      <fileset dir="${artifact.temp.output.PigeonUserSO}" excludes="**/*.jar"/>
+      <fx:resources>
+        <fx:fileset refid="all_but_PigeonUserSO"/>
+      </fx:resources>
+      <manifest>
+        <attribute name="Implementation-Title" value=""/>
+        <attribute name="Implementation-Version" value=""/>
+        <attribute name="Implementation-Vendor" value=""/>
+      </manifest>
+    </fx:jar>
+    <fx:deploy width="600" height="400" updatemode="background" outdir="${artifact.temp.output.PigeonUserSO}/deploy" outfile="PigeonUserSO">
+      <fx:application refid="PigeonUserSO_id"/>
+      <fx:resources>
+        <fx:fileset refid="all_PigeonUserSO"/>
+      </fx:resources>
+    </fx:deploy>
+    <copy todir="${artifact.output.pigeonuserso}">
+      <fileset dir="${artifact.temp.output.PigeonUserSO}/deploy"/>
+    </copy>
+    <delete includeemptydirs="true">
+      <fileset dir="${artifact.temp.output.PigeonUserSO}"/>
+    </delete>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.pigeonuserso" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

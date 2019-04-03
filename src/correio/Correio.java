@@ -6,5 +6,4 @@ public class Correio {
         //Buffer buffer = new Buffer(M, N, new);
 
     }
-
 }

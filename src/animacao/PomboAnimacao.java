@@ -56,8 +56,7 @@ public class PomboAnimacao {
     final static Image BOOM3 = new Image(PomboAnimacao.class.getResource("/Boom3.png").toString());
     final static Image BOOM4 = new Image(PomboAnimacao.class.getResource("/Boom4.png").toString());
     final static Image BOOM5 = new Image(PomboAnimacao.class.getResource("/Boom5.png").toString());
-
-    final static Image DORMIR = new Image(PomboAnimacao.class.getResource("/dormir4.png").toString());
+    final static Image DORMIR = new Image(PomboAnimacao.class.getResource("/Dormir4.png").toString());
 
     //aviãozinho do mapa
     final static Image PBMAPA = new Image(PomboAnimacao.class.getResource("/VooCima1.png").toString());

@@ -55,6 +55,7 @@ public class PomboAnimacao {
     final static Image BOOM2 = new Image(PomboAnimacao.class.getResource("/Boom2.png").toString());
     final static Image BOOM3 = new Image(PomboAnimacao.class.getResource("/Boom3.png").toString());
     final static Image BOOM4 = new Image(PomboAnimacao.class.getResource("/Boom4.png").toString());
+    final static Image BOOM5 = new Image(PomboAnimacao.class.getResource("/Boom5.png").toString());
 
     final static Image DORMIR = new Image(PomboAnimacao.class.getResource("/dormir4.png").toString());
 
@@ -431,53 +432,90 @@ public class PomboAnimacao {
 
     public void boom() {
 
-        ImageView boom1, boom2, boom3, boom4;
+        ImageView boom1, boom2, boom3, boom4, boom5;
 
         boom1 = new ImageView(BOOM1);
         boom2 = new ImageView(BOOM2);
         boom3 = new ImageView(BOOM3);
         boom4 = new ImageView(BOOM4);
+        boom5 = new ImageView(BOOM5);
 
 
-        Timeline t = new Timeline();
-        t.setCycleCount(1);
+        KeyValue image1 = new KeyValue(pb00.imageProperty(), BOOM1);
+        KeyValue image2 = new KeyValue(pb00.imageProperty(), BOOM1);
+        KeyFrame keyFrame1 = new KeyFrame(Duration.millis(100),image1, image2);
+
+        KeyValue image3 = new KeyValue(pb00.imageProperty(), BOOM2);
+        KeyValue image4 = new KeyValue(pb00.imageProperty(), BOOM2);
+        KeyFrame keyFrame2 = new KeyFrame(Duration.millis(200),image3, image4);
+
+        KeyValue image5 = new KeyValue(pb00.imageProperty(), BOOM3);
+        KeyValue image6 = new KeyValue(pb00.imageProperty(), BOOM3);
+
+        KeyFrame keyFrame3 = new KeyFrame(Duration.millis(300),image5, image6);
+
+        KeyValue image7 = new KeyValue(pb00.imageProperty(), BOOM4);
+        KeyValue image8 = new KeyValue(pb00.imageProperty(), BOOM4);
+        KeyFrame keyFrame4 = new KeyFrame(Duration.millis(400),image7, image8);
+
+        KeyValue image9 = new KeyValue(pb00.imageProperty(), BOOM5);
+        KeyValue image10 = new KeyValue(pb00.imageProperty(), BOOM5);
+        KeyFrame keyFrame5 = new KeyFrame(Duration.millis(500),image9, image10);
 
 
-        t.getKeyFrames().add(new KeyFrame(
-                Duration.seconds(50),
-                (ActionEvent event) -> {
-                    pomboVoando.getChildren().setAll(boom1);
-                    pomboCarregando.getChildren().setAll(boom1);
-                }
-        ));
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(keyFrame1, keyFrame2,keyFrame3, keyFrame4, keyFrame5);
+        timeline.play();
+
+                /*
+    	        Timeline t = new Timeline();
+    	        t.setCycleCount(5);
 
 
-        t.getKeyFrames().add(new KeyFrame(
-                Duration.seconds(100),
-                (ActionEvent event) -> {
-                    pomboVoando.getChildren().setAll(boom2);
-                    pomboCarregando.getChildren().setAll(boom2);
-                }
-        ));
-
-        t.getKeyFrames().add(new KeyFrame(
-                Duration.seconds(150),
-                (ActionEvent event) -> {
-                    pomboVoando.getChildren().setAll(boom3);
-                    pomboCarregando.getChildren().setAll(boom3);
-                }
-        ));
+    	        t.getKeyFrames().add(new KeyFrame(
+    	                Duration.seconds(50),
+    	                (ActionEvent event) -> {
+    	                    pomboVoando.getChildren().setAll(boom1);
+    	                    pomboCarregando.getChildren().setAll(boom1);
+    	                }
+    	        ));
 
 
-        t.getKeyFrames().add(new KeyFrame(
-                Duration.seconds(200),
-                (ActionEvent event) -> {
-                    pomboVoando.getChildren().setAll(boom4);
-                    pomboCarregando.getChildren().setAll(boom4);
-                }
-        ));
+    	        t.getKeyFrames().add(new KeyFrame(
+    	                Duration.seconds(100),
+    	                (ActionEvent event) -> {
+    	                	pomboVoando.getChildren().setAll(boom2);
+    	                	pomboCarregando.getChildren().setAll(boom2);
+    	                }
+    	        ));
 
-        t.play();
+    	        t.getKeyFrames().add(new KeyFrame(
+    	                Duration.seconds(150),
+    	                (ActionEvent event) -> {
+    	                	pomboVoando.getChildren().setAll(boom3);
+    	                    pomboCarregando.getChildren().setAll(boom3);
+    	                }
+    	        ));
+
+
+    	        t.getKeyFrames().add(new KeyFrame(
+    	                Duration.seconds(200),
+    	                (ActionEvent event) -> {
+    	                	pomboVoando.getChildren().setAll(boom4);
+    	                    pomboCarregando.getChildren().setAll(boom4);
+    	                }
+    	        ));
+
+    	        t.getKeyFrames().add(new KeyFrame(
+    	                Duration.seconds(250),
+    	                (ActionEvent event) -> {
+    	                	pomboVoando.getChildren().setAll(boom5);
+    	                    pomboCarregando.getChildren().setAll(boom5);
+    	                }
+    	        ));
+
+    	        t.play();
+    	        */
 
     }
 }

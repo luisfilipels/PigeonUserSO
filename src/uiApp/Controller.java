@@ -26,58 +26,75 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+    Controller da tela principal.
+ */
+
 public class Controller {
-    @FXML
-    public AnchorPane idJanela;
+
+    /* INICIO ELEMENTOS DA JANELA */
 
     @FXML
-    private ImageView idMapa;
+    public AnchorPane idJanela; // Janela principal
 
     @FXML
-    public Button btPombo;
+    private ImageView idMapa; // Mapa
 
     @FXML
-    private AnchorPane idBuffer;
+    public Button btPombo; // Botao do pombo, tanto para criar, quanto para matar
 
     @FXML
-    private Button btCriaUsuario;
+    private Button btCriaUsuario; // Botao de criacao de usuarios
 
     @FXML
-    private Button btMataUsuario;
+    private Button btMataUsuario; // Botao de matar usuarios
 
     @FXML
-    public GridPane TabelaUsuarios;
+    public GridPane TabelaUsuarios; // Tabela por completo, incluindo as IDs dos usuarios, contagem de mensagens e labels USUARIOS e CARTAS
 
     @FXML
-    public TableView<Usuario> tableUsers = new TableView<Usuario>();
+    public TableView<Usuario> tableUsers = new TableView<Usuario>(); // Lista de IDs de usuarios visivel na janela
 
     @FXML
-    public TableColumn<Usuario, String> tableID;
+    public TableColumn<Usuario, String> tableID; // Como foi usado TableView, esta é a coluna de IDs do TableView
 
     @FXML
-    public TableColumn<Usuario, String> tableStatus;
+    public Label contaMensagens; // Label contendo a contagem de mensagens
 
     @FXML
-    public Label testLabel;
+    TextField fieldDeletaUsuario; // Entrada de dados para exclusao de um usuario, exibido na janela principal
 
-    final static Image ADDUSNORM01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuario1x.png").toString());
-    final static Image ADDUSHOVER01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuarioHver1x.png").toString());
-    final static Image KILLUS01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1xNormal.png").toString());
-    final static Image KILLUSHOVER01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1x.png").toString());
+    /*FIM ELEMENTOS DA JANELA */
+    /*===============================================================================================================*/
+    /*INICIO CARREGAMENTO DE IMAGENS*/
 
-    final static Image ADDPB01 = new Image(PomboAnimacao.class.getResource("/PomboNormal1x.png").toString());
-    final static Image KILLPB01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboNormal1x.png").toString());
-    final static Image ADDPBHOVER01 = new Image(PomboAnimacao.class.getResource("/PomboHover1x.png").toString());
-    final static Image KILLPBHOVER01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboHover1x.png").toString());
+    final static Image ADDUSNORM01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuario1x.png").toString());       // Botao de criacao de usuarios, sem hover
+    final static Image ADDUSHOVER01 = new Image(PomboAnimacao.class.getResource("/AdicionaUsuarioHver1x.png").toString());  // Botao de criacao de usuarios, hover
+    final static Image KILLUS01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1xNormal.png").toString());      // Botao de exclusao de usuarios, sem hover
+    final static Image KILLUSHOVER01 = new Image(PomboAnimacao.class.getResource("/ExcluiUsuario1x.png").toString());       // Botao de criacao de usuarios, hover
+    final static Image ADDPB01 = new Image(PomboAnimacao.class.getResource("/PomboNormal1x.png").toString());               // Botao de criacao de pombo, sem hover
+    final static Image KILLPB01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboNormal1x.png").toString());        // Botao de exclusao de usuarios, sem hover
+    final static Image ADDPBHOVER01 = new Image(PomboAnimacao.class.getResource("/PomboHover1x.png").toString());           // Botao de criacao de pombo, hover
+    final static Image KILLPBHOVER01 = new Image(PomboAnimacao.class.getResource("/DeletaPomboHover1x.png").toString());    // Botao de exclusao de usuarios, sem hover
 
-    public ControllerPopupUsuario popupUsuario;
-    public ControllerPopupPombo popupPombo;
-    public ControllerPopupM popupM;
+    /*FIM CARREGAMENTO DE IMAGENS */
+    /*===============================================================================================================*/
+    /*INICIO AGRUPAMENTO DE DADOS*/
 
-    public Group grupoUsuario = new Group();
-    public Group grupoPombo = new Group();
+    public Group grupoUsuario = new Group();                                        // Grupo contendo as imagens de cada um dos usuarios, a ser exibido em idJanela
+    public Group grupoPombo = new Group();                                          // Grupo contendo as imagens do pombo, a ser exibido em idJanela
+    public ObservableList<Usuario> listaUsuarios;                                   // Lista de usuarios a serem exibidos na tabela
+    public Buffer buffer = new Buffer(10, 4, this);    // Referencia ao buffer (caixa de correios)
+    public static boolean pomboVivo = false;                                        // A ser utilizado na escolha de botoes do pombo a serem exibidos na interface
+    public ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();                // Arraylist com referencias as threads de escritores
+    public ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();       // Arraylist com referencias as imagens (sprites) e animacoes dos escritores
+    public static Pombo pombo;                                                      // Referencia a thread do pombo
+    public static PomboAnimacao animacaoPombo;                                      // Referencia aos sprites e animacoes do pombo
+    public int currentID, tc=5, tv=5, td=2;                                         // Inteiros para uso temporario na criacao de um novo pombo
 
-    public ObservableList<Usuario> listaUsuarios;
+    /*FIM AGRUPAMENTO DE DADOS*/
+    /*===============================================================================================================*/
+    /*INICIO FUNCOES DE IMAGENS DE BOTOES*/
 
     @FXML
     private void handleButtonCriaUsuarioMouseIn () {
@@ -126,56 +143,64 @@ public class Controller {
         }
     }
 
+    /*FIM FUNCOES DE IMAGENS DE BOTOES*/
+    /*===============================================================================================================*/
+    /*INICIO FUNCOES PRINCIPAIS*/
+
 	@FXML
-	private void initialize() {
-		ImageView addUsuario01 = new ImageView(ADDUSNORM01);
+	private void initialize() {                                 //Funcao executada automaticamente uma vez, na inicializacao do programa
+		ImageView addUsuario01 = new ImageView(ADDUSNORM01);    // Carregando imagens para botoes de criacao de usuarios...
 		btCriaUsuario.setGraphic(addUsuario01);
 		btCriaUsuario.setBackground(null);
 		
-		ImageView killUsuario01 = new ImageView(KILLUS01);
+		ImageView killUsuario01 = new ImageView(KILLUS01);      // ... e para matar usuarios
 		btMataUsuario.setGraphic(killUsuario01);
 		btMataUsuario.setBackground(null);
-		testLabel = new Label();
-		testLabel.setText("0");
-		testLabel.setTranslateX(315);
-		testLabel.setTranslateY(553);
-		testLabel.setScaleX(3);
-		testLabel.setScaleY(3);
-		idJanela.getChildren().add(testLabel);
-		ImageView addPombo01 = new ImageView(ADDPB01);
+
+		contaMensagens = new Label();                           // Inicializando o contador de mensagens
+		contaMensagens.setText("0");
+		contaMensagens.setTranslateX(315);
+		contaMensagens.setTranslateY(553);
+		contaMensagens.setScaleX(3);
+		contaMensagens.setScaleY(3);
+		idJanela.getChildren().add(contaMensagens);
+
+		ImageView addPombo01 = new ImageView(ADDPB01);          // Carregando imagens para botoes de criacao de usuarios
 		btPombo.setGraphic(addPombo01);
 		btPombo.setBackground(null);
-		idJanela.getChildren().add(grupoUsuario);
-		idJanela.getChildren().add(grupoPombo);
 
-		ControllerPopupUsuario.mainController = this;
+		idJanela.getChildren().add(grupoUsuario);               // Para exibir as animacoes e sprites dos usuarios...
+		idJanela.getChildren().add(grupoPombo);                 // ... e pombo
+
+		ControllerPopupUsuario.mainController = this;           // Quando os popups de entrada de dados forem inicializados, eles terao uma referencia a este controller
 		ControllerPopupPombo.mainController = this;
 		ControllerPopupM.mainController = this;
         try {
-            popupM();
-
+            popupM();                                           // Lendo o numero maximo de cartas (M)
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         TabelaUsuarios.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         listaUsuarios = FXCollections.observableArrayList();
         tableID.setCellValueFactory(new PropertyValueFactory<Usuario, String>("id"));
-        tableUsers.setItems(listaUsuarios);
+        tableUsers.setItems(listaUsuarios);                                                              // Configurando tableUsers para que exibida listaUsuarios
 
 
 
 	}
-	public void atualizaTabela () {
+
+	public void atualizaTabela () {                             // Atualizar o contador de mensagens com o valor atual de mensagens na caixa de correio
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                testLabel.setText(Integer.toString(buffer.mensagens));
+                contaMensagens.setText(Integer.toString(buffer.mensagens));
             }
         });
     }
 
 
-	public void popupM () throws Exception{
+	public void popupM () throws Exception{                     // Chamar o popup de M
         Stage popup = new Stage();
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("popupCorreio.fxml")
@@ -189,15 +214,8 @@ public class Controller {
         popup.setAlwaysOnTop(true);
         popup.toFront();
     }
-    public Buffer buffer = new Buffer(10, 4, this);
 
-    public static boolean pomboVivo = false;
-    public ArrayList<Escritor> listaEscritores = new ArrayList<Escritor>();
-    public ArrayList<UsuarioAnimacao> animacaosEscritor = new ArrayList<UsuarioAnimacao>();
-    public static Pombo pombo;
-    public static PomboAnimacao animacaoPombo;
-    public int currentID, tc=5, tv=5, td=2;
-
+    /* Getters diversos */
     public int getTc() {
         return tc;
     }
@@ -210,11 +228,9 @@ public class Controller {
     public Buffer getBuffer() {
         return buffer;
     }
+    /*=================*/
 
-    @FXML
-    public Button botaoCriarPombo;
-
-    public void popUpPombo () throws IOException {
+    public void popUpPombo () throws IOException { // Popup exibido quando o pombo nao esta vivo. Pega os dados com que o novo pombo sera criado, e o cria com esses dados
         Stage popup = new Stage();
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("popupPombo.fxml")
@@ -228,12 +244,8 @@ public class Controller {
         popup.show();
     }
 
-    private void criarPombo() throws Exception{
-        popUpPombo();
-    }
-
     @FXML
-    void criarEscritor(ActionEvent event) throws IOException{
+    void criarEscritor(ActionEvent event) throws IOException{ // Popup de leitura de dados de um novo escritor
         Stage popup = new Stage();
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("popupUsuario.fxml")
@@ -249,25 +261,22 @@ public class Controller {
     }
 
     @FXML
-    TextField fieldDeletaUsuario;
-
-    @FXML
-    void matarEscritor(ActionEvent event) {
+    void matarEscritor(ActionEvent event) {  // Funcao que pega a string que esta presentemente escrita em fieldDeletaUsuario
         String idLido = fieldDeletaUsuario.getText();
         System.out.println(grupoUsuario.getChildren().size());
-        for (int i = 0; i < listaEscritores.size(); i++) {
-            if (listaEscritores.get(i).getsId().equals(idLido)) {
-                listaEscritores.get(i).matar();
-                listaEscritores.remove(i);
+        for (int i = 0; i < listaEscritores.size(); i++) {          // Fazendo uma busca sequencial em listaEscritores (threads de usuarios)
+            if (listaEscritores.get(i).getsId().equals(idLido)) {   // Se for encontrado uma thread cuja ID seja a que foi lida...
+                listaEscritores.get(i).matar();                     // ... mate a thread ...
+                listaEscritores.remove(i);                          // ... e a retire da lista
             }
         }
-        for (int i = 0; i < grupoUsuario.getChildren().size(); i++) {
-            if (grupoUsuario.getChildren().get(i).getAccessibleText().equals(idLido)) {
-                grupoUsuario.getChildren().remove(i);
+        for (int i = 0; i < grupoUsuario.getChildren().size(); i++) {                   // Fazendo uma busca sequencial em grupoUsuario (sprites e animacoes dos usuarios)
+            if (grupoUsuario.getChildren().get(i).getAccessibleText().equals(idLido)) { // Se for encontrado um grupo de animacaoUsuario com atributo AccessibleText tal qual o que foi lido..
+                grupoUsuario.getChildren().remove(i);                                   // ... retirar a animacao
                 System.out.println("Usuario removido");
             }
         }
-        for (int i = 0; i < listaUsuarios.size(); i++) {
+        for (int i = 0; i < listaUsuarios.size(); i++) {                                // Fazendo uma busca sequencial em listaUsuarios (lista de usuarios da tabela)
             if (listaUsuarios.get(i).getId().equals(fieldDeletaUsuario.getText())) {
                 listaUsuarios.remove(i);
             }
@@ -276,35 +285,28 @@ public class Controller {
 
 
 
-    private void matarPombo() {
+    private void matarPombo() {                                         // Funcao para matar pombo caso esteja vivo e não esteja carregando cartas. Caso esteja...
         if (!buffer.pomboCarregando) {
             pombo.matar();
             pombo = null;
-            //pombo.matar();
-            //pombo = null;
             grupoPombo.getChildren().remove(0);
             System.out.println("Pombo morto...");
             pomboVivo = false;
-        } else {
+        } else {                                                       // ... fazer nada
             System.out.println("Pombo não pode ser morto agora!");
         }
     }
 
     @FXML
-    void acaoPombo(ActionEvent event) throws Exception{
+    void acaoPombo(ActionEvent event) throws Exception{                 // Funcao utilizada ao clicar no botao do pombo
         if(!pomboVivo) {
             animacaoPombo = new PomboAnimacao();
 
             btPombo.setText("Matar Pombo");
-            criarPombo();
-
-            //pomboVivo = true;
-
-            //System.out.println("Pombo criado...");
+            popUpPombo();
         }
         else
         {
-            //pomboVivo = false;
             btPombo.setText("Criar Pombo");
             matarPombo();
         }

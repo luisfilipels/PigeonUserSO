@@ -7,17 +7,25 @@ import animacao.UsuarioAnimacao;
 import javafx.scene.control.Label;
 import uiApp.Controller;
 
+/*
+    Classe principal, responsavel por armazenar mensagens escritas pelos usuarios e lidar com semaforos
+ */
+
 public class Buffer {
 
-    private Mensagem[] buffer;
-    private int carga;
-    private int indiceEntrada = 0;
-    private int indiceSaida = 0;
-    public int mensagens = 0;
-    public Semaphore empty, mutex, full;
-    public boolean pomboCarregando;
-    public static Controller mainController;
-    public int tamanho;
+    /*INICIO DECLARACAO DE VARIAVEIS*/
+    private Mensagem[] buffer;                      // Array de Mensagem. A caixa de correios, propriamente dita
+    private int carga;                              // Carga com que o pombo devera voar (N)
+    private int indiceEntrada = 0, indiceSaida = 0; // Variaveis de contagem para debugging no console
+    public int mensagens = 0;                       // Numero de mensagens na caixa de correio
+    public Semaphore empty, mutex, full;            // Semaforos para numero de espacos vazios, mutex, e indicativo de se a caixa esta ou nao cheia
+    public boolean pomboCarregando;                 // Utilizado na exclusao do pombo. Se for true, nao excluir o pombo
+    public static Controller mainController;        // Referencia para Controller.java
+    public int tamanho;                             // Numero maximo de cartas na caixa (M)
+    
+    /*FIM DECLARACAO DE VARIAVEIS*/
+    /*==============================================================================================*/
+    /*INICIO FUNCOES PRINCIPAIS*/
 
     public Buffer(int tamanho, int carga, Controller mainController){
         this.tamanho = tamanho;
@@ -33,9 +41,8 @@ public class Buffer {
 
         mutex.acquire();
         if(mensagens >= buffer.length) {
-            System.out.println("Buffer cheio ."+valor.getAutor()+" espera");	//TODO Tirar isso depois!!!
+            System.out.println("Buffer cheio ."+valor.getAutor()+" espera");
             animacao.usuarioDormir();
-            //full.acquire();
         }
         mutex.release();
 
@@ -47,15 +54,15 @@ public class Buffer {
         executando(1000);
         mainController.atualizaTabela();
 
-        buffer[indiceEntrada] = valor;
-        indiceEntrada = (indiceEntrada+1) % buffer.length;
-        mensagens++;
+        buffer[indiceEntrada] = valor;                                                     //
+        indiceEntrada = (indiceEntrada+1) % buffer.length;                                 // Linhas de uso para debugging no console
+        System.out.println(valor.getAutor()+" escreveu mensagem "+ (valor.getNumero()-1)); //
 
-        System.out.println(valor.getAutor()+" escreveu mensagem "+ (valor.getNumero()-1));
+        mensagens++;
 
         mutex.release();
 
-        if(mensagens%carga == 0 && mensagens > 0){
+        if(mensagens%carga == 0 && mensagens > 0){                                          // Se a caixa nao estiver cheia, e o numero de mensagens nao for zero...
             full.release();
             System.out.printf("mensagens = %d; carga = %d ", mensagens, carga);
         }
@@ -80,8 +87,8 @@ public class Buffer {
 
         pomboCarregando = true;
         for(int i=0; i<carga; i++) {
-            executando((tc*1500)/carga);
-            pomboAnimado.carregando(tc/carga);
+            executando((tc*1500)/carga);                        // Executando por um tempo que permita a sincronia com a animacao
+            pomboAnimado.carregando(tc/carga);                  //
 
             saida[i] = buffer[indiceSaida];
             buffer[indiceSaida] = null;
